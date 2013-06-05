@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 4.3
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLFHelper", "PLFHelper\PLFHelper.csproj", "{C3AA90A6-D41B-41CE-A43E-471575347617}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3AA90A6-D41B-41CE-A43E-471575347617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3AA90A6-D41B-41CE-A43E-471575347617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3AA90A6-D41B-41CE-A43E-471575347617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3AA90A6-D41B-41CE-A43E-471575347617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal
