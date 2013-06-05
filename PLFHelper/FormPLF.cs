@@ -19,58 +19,25 @@
  * THE SOFTWARE.
  */
 using System;
-using System.IO;
-using System.Net.NetworkInformation;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace PLFHelper
 {
 	/// <summary>
-	/// Class with program entry point.
+	/// Description of MainForm.
 	/// </summary>
-	internal sealed class Program
+	public partial class FormPLF : Form
 	{
-		static string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		static char slash = Path.DirectorySeparatorChar;
-
-		/// <summary>
-		/// Program entry point.
-		/// </summary>
-		[STAThread]
-		private static void Main(string[] args)
+		public FormPLF()
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormPLF());
-		}
-
-		/// <summary>
-		/// Checks if an internet connection exists
-		/// </summary>
-		/// <returns>true if internet connection exists, false if not</returns>
-		public static bool CheckInternetConnection()
-		{
-			Ping ping = new Ping();
-
-			try
-			{
-				PingReply reply = ping.Send("www.google.de", 250);
-				if (reply.Status != IPStatus.Success)
-				{
-					reply = ping.Send("www.preislistenpfleger.de", 250);
-					if (reply.Status != IPStatus.Success)
-					{
-						reply = ping.Send("www.wurzelimperium.de", 250);
-					}
-				}
-
-				return (reply.Status == IPStatus.Success);
-			}
-			catch
-			{
-				return false;
-			}
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+			
+			//
+			// TODO: Add constructor code after the InitializeComponent() call.
+			//
 		}
 	}
 }

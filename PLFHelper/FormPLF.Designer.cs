@@ -18,59 +18,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-using System;
-using System.IO;
-using System.Net.NetworkInformation;
-using System.Reflection;
-using System.Windows.Forms;
-
 namespace PLFHelper
 {
-	/// <summary>
-	/// Class with program entry point.
-	/// </summary>
-	internal sealed class Program
+	partial class FormPLF
 	{
-		static string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		static char slash = Path.DirectorySeparatorChar;
-
 		/// <summary>
-		/// Program entry point.
+		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
-		[STAThread]
-		private static void Main(string[] args)
-		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormPLF());
-		}
-
+		private System.ComponentModel.IContainer components = null;
+		
 		/// <summary>
-		/// Checks if an internet connection exists
+		/// Disposes resources used by the form.
 		/// </summary>
-		/// <returns>true if internet connection exists, false if not</returns>
-		public static bool CheckInternetConnection()
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
 		{
-			Ping ping = new Ping();
-
-			try
-			{
-				PingReply reply = ping.Send("www.google.de", 250);
-				if (reply.Status != IPStatus.Success)
-				{
-					reply = ping.Send("www.preislistenpfleger.de", 250);
-					if (reply.Status != IPStatus.Success)
-					{
-						reply = ping.Send("www.wurzelimperium.de", 250);
-					}
+			if (disposing) {
+				if (components != null) {
+					components.Dispose();
 				}
-
-				return (reply.Status == IPStatus.Success);
 			}
-			catch
-			{
-				return false;
-			}
+			base.Dispose(disposing);
+		}
+		
+		/// <summary>
+		/// This method is required for Windows Forms designer support.
+		/// Do not change the method contents inside the source code editor. The Forms designer might
+		/// not be able to load this method if it was changed manually.
+		/// </summary>
+		private void InitializeComponent()
+		{
+			// 
+			// FormPLF
+			// 
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Text = "PLFHelper";
+			this.Name = "FormPLF";
 		}
 	}
 }
