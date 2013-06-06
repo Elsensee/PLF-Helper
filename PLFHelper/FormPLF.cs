@@ -28,7 +28,7 @@ namespace PLFHelper
 	/// </summary>
 	public partial class FormPLF : Form
 	{
-		public FormPLF()
+		public FormPLF(bool internet)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.

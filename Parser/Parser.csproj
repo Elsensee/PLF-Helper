@@ -35,16 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Parser.cs" />
+    <Compile Include="ParserMH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Enums\Enums.csproj">
-      <Project>{9CE96E69-ADA7-4DA9-96B0-C5D6B95CF84C}</Project>
-      <Name>Enums</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Parser.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

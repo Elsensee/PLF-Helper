@@ -18,18 +18,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 
-namespace PLFHelper.Test
+namespace PLFHelper
 {
 	/// <summary>
-	/// Description of TestClass.
+	/// Provides functions for Google. To. Help. You.
 	/// </summary>
-	[TestFixture()]
-	public class TestClass
+	internal class GoogleHelper
 	{
-		
+		string password;
+		string username;
+
+		public GoogleHelper(string user, string pass)
+		{
+			this.username = user;
+			this.password = pass;
+		}
 	}
 }

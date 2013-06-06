@@ -42,7 +42,7 @@ namespace PLFHelper
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormPLF());
+			Application.Run(new FormPLF(CheckInternetConnection()));
 		}
 
 		/// <summary>

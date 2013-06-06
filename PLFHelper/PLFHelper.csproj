@@ -51,10 +51,12 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
     <Compile Include="FormPLF.cs" />
     <Compile Include="FormPLF.Designer.cs">
       <DependentUpon>FormPLF.cs</DependentUpon>
     </Compile>
+    <Compile Include="GoogleHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +65,12 @@
     <None Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Parser\Parser.csproj">
+      <Project>{C107B887-72CC-4907-94BC-BC97C8117D99}</Project>
+      <Name>Parser</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -18,24 +18,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-using System;
 
-namespace Enums
+namespace PLFHelper
 {
-	public enum Game
-	{
-		unknown = -1,
-		MolehillEmpire = 0
-	}
-
-	public enum Language
-	{
-		unknown = -1,
-		EN = 0,
-		DE = 1,
-		NL = 2
-	}
-
 	public enum Level
 	{
 		unknown = -1,
