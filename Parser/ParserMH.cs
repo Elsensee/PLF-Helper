@@ -237,14 +237,14 @@ namespace Parser
 		{
 			float tempPlayer = prices[this.PlayersIndex];
 			float tempPlayer1Index = prices[this.Players1Index];
-			prices[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value);
+			prices[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, ciInfo);
 
 			Regex player1PointRegex = new Regex(@"(?<position>\d+)\..+\s+1\s*\n");
 			if (player1PointRegex.IsMatch(text))
 			{
 				MatchCollection player1PointMatches = player1PointRegex.Matches(text);
 				Match player1PointMatch = player1PointMatches[player1PointMatches.Count - 1];
-				prices[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value);
+				prices[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value, ciInfo);
 			}
 			return (tempPlayer != prices[this.PlayersIndex]) || (tempPlayer1Index != prices[this.Players1Index]); // Also simple
 		}

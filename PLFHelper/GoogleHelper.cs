@@ -19,21 +19,60 @@
  * THE SOFTWARE.
  */
 using System;
+using DotNetOpenAuth.OAuth2;
+using Google.Apis.Authentication.OAuth2;
+using Google.Apis.Authentication.OAuth2.DotNetOpenAuth;
+using Google.Apis.Drive.v2;
+using Google.Apis.Util;
+using Google.Apis.Services;
 
 namespace PLFHelper
 {
 	/// <summary>
 	/// Provides functions for Google. To. Help. You.
 	/// </summary>
-	internal class GoogleHelper
+	internal partial class GoogleHelper
 	{
-		string password;
-		string username;
+		//
+		const string CLIENT_ID = "CLIENT_ID";
+		const string CLIENT_SECRET = "CLIENT_SECRET";
+		//
+		bool authenticated = false;
+		DriveService service;
 
-		public GoogleHelper(string user, string pass)
+		public GoogleHelper(bool authenticate = false)
 		{
-			this.username = user;
-			this.password = pass;
+			if (authenticate)
+			{
+				this.service = this.Authenticate();
+				this.authenticated = true;
+			}
+		}
+
+		public void Authenticate()
+		{
+			if (this.authenticated)
+			{
+				// Register the authenticator and create the service
+				var provider = new NativeApplicationClient(GoogleAuthenticationServer.Description, CLIENT_ID, CLIENT_SECRET);
+				var auth = new OAuth2Authenticator<NativeApplicationClient>(provider, GetAuthorization);
+				return new DriveService(new BaseClientService.Initializer()
+				{
+					Authenticator = auth;
+				});
+			}
+		}
+
+		private static IAuthorizationState GetAuthorization(NativeApplicationClient arg)
+		{
+			// Get the auth URL:
+			IAuthorizationState state = new AuthorizationState(new[] { DriveService.Scopes.Drive.GetStringValue() });
+			state.Callback = new Uri(NativeApplicationClient.OutOfBandCallbackUrl);
+			Uri authUri = arg.RequestUserAuthorization(state);
+
+			string authCode = "Have to add own request handler";
+
+			return arg.ProcessUserAuthorization(authCode, state);
 		}
 	}
 }
