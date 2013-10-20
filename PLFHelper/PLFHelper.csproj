@@ -59,10 +59,14 @@
     <Reference Include="Google.Apis.Drive.v2">
       <HintPath>Google.Apis.Drive.v2.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Apis.PlatformServices">
+      <HintPath>Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json.Net35">
       <HintPath>Newtonsoft.Json.Net35.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>

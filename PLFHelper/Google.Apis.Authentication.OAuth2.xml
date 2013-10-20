@@ -74,9 +74,7 @@
             <returns>The granted authorization, or <c>null</c> if the authorization was null or rejected.</returns>
         </member>
         <member name="T:Google.Apis.Authentication.OAuth2.OAuth2Authenticator`1">
-            <summary>
-            Implements an OAuth2 authenticator using the DotNetOpenAuth library.
-            </summary>
+            <summary> Implements an OAuth2 authenticator using the DotNetOpenAuth library. </summary>
         </member>
         <member name="M:Google.Apis.Authentication.OAuth2.OAuth2Authenticator`1.#ctor(`0,System.Func{`0,DotNetOpenAuth.OAuth2.IAuthorizationState})">
             <summary>
@@ -89,6 +87,11 @@
             <summary>
             Checks if an access token has been set. If this is not the case, this method will use the specified
             State provider to generate a new AuthorizationState.
+            </summary>
+        </member>
+        <member name="M:Google.Apis.Authentication.OAuth2.OAuth2Authenticator`1.HandleResponse(Google.Apis.Http.HandleUnsuccessfulResponseArgs)">
+            <summary> 
+            Override handle response to refresh the token when Unauthorized status code is received. 
             </summary>
         </member>
         <member name="P:Google.Apis.Authentication.OAuth2.OAuth2Authenticator`1.State">

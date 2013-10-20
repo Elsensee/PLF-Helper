@@ -56,15 +56,7 @@ namespace PLFHelper
 			try
 			{
 				PingReply reply = ping.Send("www.google.de", 250);
-				if (reply.Status != IPStatus.Success)
-				{
-					reply = ping.Send("www.preislistenpfleger.de", 250);
-					if (reply.Status != IPStatus.Success)
-					{
-						reply = ping.Send("www.wurzelimperium.de", 250);
-					}
-				}
-
+				
 				return (reply.Status == IPStatus.Success);
 			}
 			catch
