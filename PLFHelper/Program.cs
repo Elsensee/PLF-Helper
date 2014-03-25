@@ -51,13 +51,14 @@ namespace PLFHelper
 		/// <returns>true if internet connection exists, false if not</returns>
 		public static bool CheckInternetConnection()
 		{
-			Ping ping = new Ping();
-
 			try
 			{
-				PingReply reply = ping.Send("www.google.de", 250);
-				
-				return (reply.Status == IPStatus.Success);
+				using (Ping ping = new Ping())
+				{
+					PingReply reply = ping.Send("www.google.de", 250);
+
+					return (reply.Status == IPStatus.Success);
+				}
 			}
 			catch
 			{
