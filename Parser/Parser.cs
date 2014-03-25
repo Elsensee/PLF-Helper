@@ -43,6 +43,7 @@ namespace Parser
 			{
 				return this.playersIndex;
 			}
+
 			set
 			{
 				if (value > -1)
@@ -51,16 +52,18 @@ namespace Parser
 				}
 				else
 				{
-					throw new ArgumentOutOfRangeException("value", "The value has to be greater than -1");
+					throw new ArgumentOutOfRangeException("value");
 				}
 			}
 		}
+
 		public int Players1Index
 		{
 			get
 			{
 				return this.players1Index;
 			}
+
 			set
 			{
 				if (value > -1)
@@ -69,16 +72,14 @@ namespace Parser
 				}
 				else
 				{
-					throw new ArgumentOutOfRangeException("value", "The value has to be greater than -1");
+					throw new ArgumentOutOfRangeException("value");
 				}
 			}
 		}
 		#endregion
 		#region Constructors
-		protected Parser()
-		{
-			
-		}
+		protected Parser() { }
+
 		public Parser(Language lang)
 		{
 			if (lang == Language.unknown)
@@ -89,11 +90,13 @@ namespace Parser
 
 			this.ciInfo = new CultureInfo(ReturnLangCode());
 		}
+
 		public Parser(Language lang, int playersIndex, int players1Index) : this(lang)
 		{
 			this.PlayersIndex = playersIndex;
 			this.Players1Index = players1Index;
 		}
+
 		public Parser(string lang)
 		{
 			switch (lang.ToUpper())
@@ -113,6 +116,7 @@ namespace Parser
 
 			this.ciInfo = new CultureInfo(ReturnLangCode());
 		}
+
 		public Parser(string lang, int playersIndex, int players1Index) : this(lang)
 		{
 			this.PlayersIndex = playersIndex;
@@ -120,7 +124,7 @@ namespace Parser
 		}
 		#endregion
 
-		public virtual bool Parse(string text, ref float[] prices, string[] plants, string[] currencies)
+		public virtual bool Parse(string text, ref float[] values, string[] names, string[] currencies)
 		{
 			return false;
 		}

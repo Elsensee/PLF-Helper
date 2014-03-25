@@ -55,6 +55,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string CurrentOffers
 		{
 			get
@@ -66,6 +67,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string Total
 		{
 			get
@@ -77,6 +79,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string DeleteFilter
 		{
 			get
@@ -88,6 +91,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string ListOfAllPlayersPoints
 		{
 			get
@@ -99,6 +103,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string ShowMyRanking
 		{
 			get
@@ -110,6 +115,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string Back
 		{
 			get
@@ -121,6 +127,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string Forward
 		{
 			get
@@ -132,6 +139,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string PlayersTotal
 		{
 			get
@@ -143,6 +151,7 @@ namespace Parser
 				return null;
 			}
 		}
+
 		private string TwoWords
 		{
 			get
@@ -166,11 +175,13 @@ namespace Parser
 
 			this.ciInfo = new CultureInfo(this.ReturnLangCode());
 		}
+
 		public ParserMH(Language lang, int playersIndex, int players1Index) : this(lang)
 		{
 			this.PlayersIndex = playersIndex;
 			this.Players1Index = players1Index;
 		}
+
 		public ParserMH(string lang)
 		{
 			switch (lang.ToUpper())
@@ -190,6 +201,7 @@ namespace Parser
 
 			this.ciInfo = new CultureInfo(this.ReturnLangCode());
 		}
+
 		public ParserMH(string lang, int playersIndex, int players1Index) : this(lang)
 		{
 			this.PlayersIndex = playersIndex;
@@ -197,7 +209,7 @@ namespace Parser
 		}
 		#endregion
 
-		public override bool Parse(string text, ref float[] prices, string[] plants, string[] currencies)
+		public override bool Parse(string text, ref float[] values, string[] names, string[] currencies)
 		{
 			if (this.PlayersIndex > -1 && this.Players1Index > -1)
 			{
@@ -206,47 +218,48 @@ namespace Parser
 					this.currentCurrency = currencies[(int)this.lang];
 				}
 
-				Regex plantRegex = new Regex(@"\n[\d\.]+\s+(?<product>(" + this.TwoWords + @"|\S+))\s+.+?\s+(?<price>[\d\.,]{3,}) " + this.currentCurrency + @"\s+[\d\.,]{3,} " + this.currentCurrency + @"\s+[^\n]+\n", RegexOptions.IgnoreCase);
+				Regex plantRegex = new Regex(@"\n[\d\.]+\s+(?<product>(" + this.TwoWords + @"|\S+))\s+.+?\s+(?<value>[\d\.,]{3,}) " + this.currentCurrency + @"\s+[\d\.,]{3,} " + this.currentCurrency + @"\s+[^\n]+\n", RegexOptions.IgnoreCase);
 				Regex playerRegex = new Regex(Regex.Escape(this.PlayersTotal) + @"\s+(?<player>\d+)\s+" + Regex.Escape(this.ShowMyRanking));
 
 				if (plantRegex.IsMatch(text))
 				{
-					return ParseMarket(plantRegex.Match(text), ref prices, plants);
+					return this.ParseMarket(plantRegex.Match(text), ref values, names);
 				}
-				else if (text.IndexOf(this.ListOfAllPlayersPoints) != -1 && playerRegex.IsMatch(text))
+				else if (text.IndexOf(this.ListOfAllPlayersPoints) > -1 && playerRegex.IsMatch(text))
 				{
-					return ParseTownHall(playerRegex.Match(text), text, ref prices);
+					return this.ParseTownHall(playerRegex.Match(text), text, ref values);
 				}
 			}
 			return false;
 		}
 
-		public bool ParseMarket(Match match, ref float[] prices, string[] plants)
+		public bool ParseMarket(Match match, ref float[] values, string[] names)
 		{
-			int plantIndex = SearchElementInArray(plants, match.Groups["product"].Value);
-			if (plantIndex == -1)
+			int nameIndex = this.SearchElementInArray(names, match.Groups["product"].Value);
+			if (nameIndex == -1)
 			{
 				return false;
 			}
-			float temp = prices[plantIndex];
-			prices[plantIndex] = Single.Parse(match.Groups["price"].Value, ciInfo);
-			return (prices[plantIndex] != temp); // Easy, huh?
+
+			float temp = values[nameIndex];
+			values[nameIndex] = Single.Parse(match.Groups["value"].Value, this.ciInfo);
+			return (values[nameIndex] != temp); // Easy, huh?
 		}
 
-		public bool ParseTownHall(Match match, string text, ref float[] prices)
+		public bool ParseTownHall(Match match, string text, ref float[] values)
 		{
-			float tempPlayer = prices[this.PlayersIndex];
-			float tempPlayer1Index = prices[this.Players1Index];
-			prices[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, ciInfo);
+			float tempPlayer = values[this.PlayersIndex];
+			float tempPlayer1Index = values[this.Players1Index];
+			values[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, this.ciInfo);
 
 			Regex player1PointRegex = new Regex(@"(?<position>\d+)\..+\s+1\s*\n");
 			if (player1PointRegex.IsMatch(text))
 			{
 				MatchCollection player1PointMatches = player1PointRegex.Matches(text);
 				Match player1PointMatch = player1PointMatches[player1PointMatches.Count - 1];
-				prices[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value, ciInfo);
+				values[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value, this.ciInfo);
 			}
-			return (tempPlayer != prices[this.PlayersIndex]) || (tempPlayer1Index != prices[this.Players1Index]); // Also simple
+			return (tempPlayer != values[this.PlayersIndex]) || (tempPlayer1Index != values[this.Players1Index]); // Also simple
 		}
 	}
 }
