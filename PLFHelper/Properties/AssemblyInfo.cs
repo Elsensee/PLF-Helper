@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Preislistenpfleger Helper")]
-[assembly: AssemblyCopyright("Copyright © 2013 Oliver Schramm")]
+[assembly: AssemblyCopyright("Copyright © 2013-2014 Oliver Schramm")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

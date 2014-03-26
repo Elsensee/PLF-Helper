@@ -233,7 +233,7 @@ namespace Parser
 			return false;
 		}
 
-		public bool ParseMarket(Match match, ref float[] values, string[] names)
+		protected bool ParseMarket(Match match, ref float[] values, string[] names)
 		{
 			int nameIndex = this.SearchElementInArray(names, match.Groups["product"].Value);
 			if (nameIndex == -1)
@@ -246,7 +246,7 @@ namespace Parser
 			return (values[nameIndex] != temp); // Easy, huh?
 		}
 
-		public bool ParseTownHall(Match match, string text, ref float[] values)
+		protected bool ParseTownHall(Match match, string text, ref float[] values)
 		{
 			float tempPlayer = values[this.PlayersIndex];
 			float tempPlayer1Index = values[this.Players1Index];
