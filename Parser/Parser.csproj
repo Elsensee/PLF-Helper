@@ -34,6 +34,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LocalizationManager.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserMH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

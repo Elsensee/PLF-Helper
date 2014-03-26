@@ -31,15 +31,15 @@ namespace PLFHelper
 	/// </summary>
 	internal sealed class Program
 	{
-		static string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		static char slash = Path.DirectorySeparatorChar;
-
 		/// <summary>
 		/// Program entry point.
 		/// </summary>
 		[STAThread]
 		private static void Main(string[] args)
 		{
+			// Initialize the localization manager (as early as possible)
+			LocalizationManager.Initialize();
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new FormPLF(CheckInternetConnection()));
