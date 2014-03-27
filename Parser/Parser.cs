@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2013 Oliver Schramm
+ * Copyright (c) 2013-2014 Oliver Schramm
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -26,15 +26,15 @@ namespace Parser
 	/// <summary>
 	/// Provides a common parser.
 	/// </summary>
-	public class Parser
+	public abstract class Parser
 	{
-		CultureInfo ciInfo;
-		Language lang;
-		string[] lastSearchArray;
-		string lastSearchElementInArray;
-		int lastResultElementInArray = -1;
-		int playersIndex = -1;
-		int players1Index = -1;
+		protected CultureInfo ciInfo;
+		protected Language lang;
+		protected string[] lastSearchArray;
+		protected string lastSearchElementInArray;
+		protected int lastResultElementInArray = -1;
+		protected int playersIndex = -1;
+		protected int players1Index = -1;
 
 		#region Properties
 		public int PlayersIndex
@@ -77,57 +77,8 @@ namespace Parser
 			}
 		}
 		#endregion
-		#region Constructors
-		protected Parser() { }
 
-		public Parser(Language lang)
-		{
-			if (lang == Language.unknown)
-			{
-				throw new ArgumentException("No valid language given!", "lang");
-			}
-			this.lang = lang;
-
-			this.ciInfo = new CultureInfo(ReturnLangCode());
-		}
-
-		public Parser(Language lang, int playersIndex, int players1Index) : this(lang)
-		{
-			this.PlayersIndex = playersIndex;
-			this.Players1Index = players1Index;
-		}
-
-		public Parser(string lang)
-		{
-			switch (lang.ToUpper())
-			{
-				case "EN":
-					this.lang = Language.EN;
-					break;
-				case "DE":
-					this.lang = Language.DE;
-					break;
-				case "NL":
-					this.lang = Language.NL;
-					break;
-				default:
-					throw new ArgumentException("No valid language given!", "lang");
-			}
-
-			this.ciInfo = new CultureInfo(ReturnLangCode());
-		}
-
-		public Parser(string lang, int playersIndex, int players1Index) : this(lang)
-		{
-			this.PlayersIndex = playersIndex;
-			this.Players1Index = players1Index;
-		}
-		#endregion
-
-		public virtual bool Parse(string text, ref float[] values, string[] names, string[] currencies)
-		{
-			return false;
-		}
+		public abstract bool Parse(string text, ref float[] values, string[] names);
 
 		protected virtual string ReturnLangCode()
 		{
@@ -148,15 +99,15 @@ namespace Parser
 		{
 			if (searchArray == this.lastSearchArray && String.Compare(searchString, lastSearchElementInArray, false) == 0)
 			{
-				return lastResultElementInArray;
+				return this.lastResultElementInArray;
 			}
 			for (int i = 0; i < searchArray.Length; i++)
 			{
 				if (String.Compare(searchString, searchArray[i], false) == 0)
 				{
-					lastSearchArray = searchArray;
-					lastSearchElementInArray = searchString;
-					lastResultElementInArray = i;
+					this.lastSearchArray = searchArray;
+					this.lastSearchElementInArray = searchString;
+					this.lastResultElementInArray = i;
 					return i;
 				}
 			}

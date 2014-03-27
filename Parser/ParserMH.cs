@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2013 Oliver Schramm
+ * Copyright (c) 2013-2014 Oliver Schramm
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -29,102 +29,23 @@ namespace Parser
 	/// </summary>
 	public class ParserMH : Parser
 	{
-		string currentCurrency;
-		CultureInfo ciInfo;
-		Language lang;
-
-		readonly string[] welcomeOnBigMarketPlace = { "Welcome to the market place!", "Willkommen auf dem großen Marktplatz!", "Welkom op de marktplaats!" };
-		readonly string[] currentOffers = { "Current offers", "Aktuelle Angebote", "Huidige aanbiedingen" };
-		readonly string[] total = { "Total", "Gesamt", "Totaal" };
-		readonly string[] deleteFilter = { "[Delete filter - show all offers]", "[Filter löschen - alle Angebote zeigen]", "[Verwijder filter - laat alle aanbiedingen zien]" };
-		readonly string[] listOfAllPlayersPoints = { "List of all players according to score", "Liste aller Spieler nach Punktzahl", "Lijst met alle spelers gesorteerd op de hoogte van de scores" };
-		readonly string[] showMyRanking = { "Show my ranking", "wo bin ich?", "Waar ben ik?" };
-		readonly string[,] backForward = { { "<<< back", "forward >>>" }, { "<<< zurück", "weiter >>>" }, { "<<< terug", "verder >>>" } };
-		readonly string[] playersTotal = { "Players total:", "Spieler gesamt:", "Spelers totaal:" };
-		readonly string[] twoWords = { "Red cabbage|Red currants|Gerber daisy|Cow lily|Water parsnip|Water violet|Water soldier|Water lily|Water knotweed|Marsh marigold|Swamp lantern|Angel's trumpet", "gelbe Teichrose", "Koe lelie|Water pastinaak|Rode aalbes|Rode kool" };
+		private readonly string[,] backForward = { { "<<< back", "forward >>>" }, { "<<< zurück", "weiter >>>" }, { "<<< terug", "verder >>>" } };
+		private readonly string[] currency = { "wT", "gB", "gB" };
+		private readonly string[] currentOffers = { "Current offers", "Aktuelle Angebote", "Huidige aanbiedingen" };
+		private readonly string[] deleteFilter = { "[Delete filter - show all offers]", "[Filter löschen - alle Angebote zeigen]", "[Verwijder filter - laat alle aanbiedingen zien]" };
+		private readonly string[] listOfAllPlayersPoints = { "List of all players according to score", "Liste aller Spieler nach Punktzahl", "Lijst met alle spelers gesorteerd op de hoogte van de scores" };
+		private readonly string[] playersTotal = { "Players total:", "Spieler gesamt:", "Spelers totaal:" };
+		private readonly string[] showMyRanking = { "Show my ranking", "wo bin ich?", "Waar ben ik?" };
+		private readonly string[] total = { "Total", "Gesamt", "Totaal" };
+		private readonly string[] twoWords = { "Red cabbage|Red currants|Gerber daisy|Cow lily|Water parsnip|Water violet|Water soldier|Water lily|Water knotweed|Marsh marigold|Swamp lantern|Angel's trumpet", "gelbe Teichrose", "Koe lelie|Water pastinaak|Rode aalbes|Rode kool" };
+		private readonly string[] welcomeOnBigMarketPlace = { "Welcome to the market place!", "Willkommen auf dem großen Marktplatz!", "Welkom op de marktplaats!" };
 
 		#region Properties
-		private string WelcomeOnBigMarketplace
-		{
-			get
-			{
-				if (this.lang != Language.unknown)
-				{
-					return this.welcomeOnBigMarketPlace[(int)this.lang];
-				}
-				return null;
-			}
-		}
-
-		private string CurrentOffers
-		{
-			get
-			{
-				if (this.lang != Language.unknown)
-				{
-					return this.currentOffers[(int)this.lang];
-				}
-				return null;
-			}
-		}
-
-		private string Total
-		{
-			get
-			{
-				if (this.lang != Language.unknown)
-				{
-					return this.total[(int)this.lang];
-				}
-				return null;
-			}
-		}
-
-		private string DeleteFilter
-		{
-			get
-			{
-				if (this.lang != Language.unknown)
-				{
-					return this.deleteFilter[(int)this.lang];
-				}
-				return null;
-			}
-		}
-
-		private string ListOfAllPlayersPoints
-		{
-			get
-			{
-				if (this.lang != Language.unknown)
-				{
-					return this.listOfAllPlayersPoints[(int)this.lang];
-				}
-				return null;
-			}
-		}
-
-		private string ShowMyRanking
-		{
-			get
-			{
-				if (this.lang != Language.unknown)
-				{
-					return this.showMyRanking[(int)this.lang];
-				}
-				return null;
-			}
-		}
-
 		private string Back
 		{
 			get
 			{
-				if (this.lang != Language.unknown)
-				{
-					return this.backForward[(int)this.lang, 0];
-				}
-				return null;
+				return (this.lang != Language.unknown) ? this.backForward[(int) this.lang, 0] : null;
 			}
 		}
 
@@ -132,11 +53,39 @@ namespace Parser
 		{
 			get
 			{
-				if (this.lang != Language.unknown)
-				{
-					return this.backForward[(int)this.lang, 1];
-				}
-				return null;
+				return (this.lang != Language.unknown) ? this.backForward[(int) this.lang, 1] : null;
+			}
+		}
+
+		private string Currency
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.currency[(int) this.lang] : null;
+			}
+		}
+
+		private string CurrentOffers
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.currentOffers[(int) this.lang] : null;
+			}
+		}
+
+		private string DeleteFilter
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.deleteFilter[(int) this.lang] : null;
+			}
+		}
+
+		private string ListOfAllPlayersPoints
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.listOfAllPlayersPoints[(int) this.lang] : null;
 			}
 		}
 
@@ -144,11 +93,23 @@ namespace Parser
 		{
 			get
 			{
-				if (this.lang != Language.unknown)
-				{
-					return this.playersTotal[(int)this.lang];
-				}
-				return null;
+				return (this.lang != Language.unknown) ? this.playersTotal[(int) this.lang] : null;
+			}
+		}
+
+		private string ShowMyRanking
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.showMyRanking[(int) this.lang] : null;
+			}
+		}
+
+		private string Total
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.total[(int) this.lang] : null;
 			}
 		}
 
@@ -156,11 +117,15 @@ namespace Parser
 		{
 			get
 			{
-				if (this.lang != Language.unknown)
-				{
-					return this.twoWords[(int)this.lang];
-				}
-				return null;
+				return (this.lang != Language.unknown) ? this.twoWords[(int) this.lang] : null;
+			}
+		}
+
+		private string WelcomeOnBigMarketplace
+		{
+			get
+			{
+				return (this.lang != Language.unknown) ? this.welcomeOnBigMarketPlace[(int) this.lang] : null;
 			}
 		}
 		#endregion
@@ -209,17 +174,12 @@ namespace Parser
 		}
 		#endregion
 
-		public override bool Parse(string text, ref float[] values, string[] names, string[] currencies)
+		public override bool Parse(string text, ref float[] values, string[] names)
 		{
 			if (this.PlayersIndex > -1 && this.Players1Index > -1)
 			{
-				if (this.currentCurrency == null)
-				{
-					this.currentCurrency = currencies[(int)this.lang];
-				}
-
-				Regex plantRegex = new Regex(@"\n[\d\.]+\s+(?<product>(" + this.TwoWords + @"|\S+))\s+.+?\s+(?<value>[\d\.,]{3,}) " + this.currentCurrency + @"\s+[\d\.,]{3,} " + this.currentCurrency + @"\s+[^\n]+\n", RegexOptions.IgnoreCase);
-				Regex playerRegex = new Regex(Regex.Escape(this.PlayersTotal) + @"\s+(?<player>\d+)\s+" + Regex.Escape(this.ShowMyRanking));
+				var plantRegex = new Regex(@"\n[\d\.]+\s+(?<product>(" + this.TwoWords + @"|\S+))\s+.+?\s+(?<value>[\d\.,]{3,}) " + Regex.Escape(this.Currency) + @"\s+[\d\.,]{3,} " + Regex.Escape(this.Currency) + @"\s+[^\n]+\n", RegexOptions.IgnoreCase);
+				var playerRegex = new Regex(Regex.Escape(this.PlayersTotal) + @"\s+(?<player>\d+)\s+" + Regex.Escape(this.ShowMyRanking));
 
 				if (plantRegex.IsMatch(text))
 				{
@@ -252,7 +212,7 @@ namespace Parser
 			float tempPlayer1Index = values[this.Players1Index];
 			values[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, this.ciInfo);
 
-			Regex player1PointRegex = new Regex(@"(?<position>\d+)\..+\s+1\s*\n");
+			var player1PointRegex = new Regex(@"(?<position>\d+)\..+\s+1\s*\n");
 			if (player1PointRegex.IsMatch(text))
 			{
 				MatchCollection player1PointMatches = player1PointRegex.Matches(text);
