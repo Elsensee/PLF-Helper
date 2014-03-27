@@ -62,7 +62,7 @@ namespace Parser
 		/// This method should be called as early as possible so we could tell the user what's really wrong.
 		/// However, if it's not called it's not THAT worse.
 		/// </summary>
-		/// <exception cref="MissingManifestResourceException">There was no default file with localizations found.</exception>
+		/// <exception cref="MissingManifestResourceException">There is no default file with localizations.</exception>
 		public static void Initialize()
 		{
 			string[] resources = assembly.GetManifestResourceNames();
