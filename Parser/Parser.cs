@@ -37,6 +37,9 @@ namespace Parser
 		protected int players1Index = -1;
 
 		#region Properties
+		/// <summary>
+		/// Gets/sets the index in the values array where the player's value is.
+		/// </summary>
 		public int PlayersIndex
 		{
 			get
@@ -57,6 +60,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets/sets the index in the values array where the last player's with one point value is.
+		/// </summary>
 		public int Players1Index
 		{
 			get
@@ -78,8 +84,19 @@ namespace Parser
 		}
 		#endregion
 
+		/// <summary>
+		/// Parses a provided <paramref name="text"/> for the specific game.
+		/// </summary>
+		/// <param name="text">The text which should be parsed.</param>
+		/// <param name="values">The values array by reference in which the parsed value(s) should be written.</param>
+		/// <param name="names">A array of names like plants.</param>
+		/// <returns>Returns <c>true</c> if parsing was successful, <c>false</c> if not.</returns>
 		public abstract bool Parse(string text, ref float[] values, string[] names);
 
+		/// <summary>
+		/// Returns the lang code for a CultureInfo object depending on the current lang variable.
+		/// </summary>
+		/// <returns>Returns a string represeting a lang code for a CultureInfo object.</returns>
 		protected virtual string ReturnLangCode()
 		{
 			switch (this.lang)
@@ -95,8 +112,16 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Searches for <paramref name="searchString"/> in <paramref name="searchArray"/>.
+		/// </summary>
+		/// <param name="searchArray">The array in which should be searched.</param>
+		/// <param name="searchString">The string which should be searched.</param>
+		/// <returns></returns>
 		protected virtual int SearchElementInArray(string[] searchArray, string searchString)
 		{
+			// This is a cache.. or something like that...
+			// Works only if the last search is the same.
 			if (searchArray == this.lastSearchArray && String.Compare(searchString, lastSearchElementInArray, false) == 0)
 			{
 				return this.lastResultElementInArray;

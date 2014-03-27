@@ -22,7 +22,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Resources;
 using System.Text.RegularExpressions;
 
 namespace PLFHelper
@@ -41,6 +40,7 @@ namespace PLFHelper
 		/// <summary>
 		/// Gets or sets the file name. After setting the class will be re-initialized.
 		/// </summary>
+		/// <exception cref="System.ArgumentNullException"></exception>
 		public static string FileName
 		{
 			get
@@ -52,9 +52,14 @@ namespace PLFHelper
 				if (!String.IsNullOrEmpty(value))
 				{
 					fileName = value;
-					// We have to re-initialize this
+					// We have to re-initialize
 					Initialize();
 				}
+				else if (value == null)
+				{
+					throw new ArgumentNullException("value");
+				}
+				// No exception if value is empty
 			}
 		}
 
@@ -62,12 +67,12 @@ namespace PLFHelper
 		/// This method should be called as early as possible so we could tell the user what's really wrong.
 		/// However, if it's not called it's not THAT worse.
 		/// </summary>
-		/// <exception cref="MissingManifestResourceException">There is no default file with localizations.</exception>
+		/// <exception cref="System.Resources.MissingManifestResourceException">There is no default file with localizations.</exception>
 		public static void Initialize()
 		{
 			string[] resources = assembly.GetManifestResourceNames();
-			bool success = false;
-			bool successEn = false;
+			var success = false;
+			var successEn = false;
 			for (int i = 0; i < resources.Length; i++)
 			{
 				success |= resources[i].Contains(fileName + "_" + currentCulture + ".txt");
@@ -81,7 +86,7 @@ namespace PLFHelper
 			// This should never happen.. if so this is critical
 			if (!successEn)
 			{
-				throw new MissingManifestResourceException();
+				throw new System.Resources.MissingManifestResourceException();
 			}
 			else if (!success)
 			{
@@ -93,8 +98,8 @@ namespace PLFHelper
 		/// Gets a localized string.
 		/// </summary>
 		/// <param name="name">The name of the string.</param>
-		/// <returns>Returns the localized string in the current culture.</returns>
-		/// <exception cref="ArgumentNullException">name or locale is null.</exception>
+		/// <returns>Returns the localized string in the current culture or in english if it wasn't found in the given culture.</returns>
+		/// <exception cref="System.ArgumentNullException">name is null.</exception>
 		public static string GetLocalizedString(string name)
 		{
 			return GetLocalizedString(name, currentCulture);
@@ -104,14 +109,20 @@ namespace PLFHelper
 		/// Gets a localized string.
 		/// </summary>
 		/// <param name="name">The name of the string.</param>
-		/// <param name="locale">The two-letter-string of the culture the string should be returned.</param>
-		/// <returns>Returns the localized string in the given culture.</returns>
-		/// <exception cref="ArgumentNullException">name or locale is null.</exception>
+		/// <param name="locale">The two-letter-string of the culture of which the string should be returned.</param>
+		/// <returns>Returns the localized string in the given culture or in english if it wasn't found in the given culture.</returns>
+		/// <exception cref="System.ArgumentNullException">name is null.</exception>
 		public static string GetLocalizedString(string name, string locale)
 		{
-			if (name == null || locale == null)
+			// If name is null we won't find any string...
+			if (name == null)
 			{
-				throw new ArgumentNullException((name == null) ? "name" : "locale");
+				throw new ArgumentNullException("name");
+			}
+			// Set this to en if locale is null
+			if (locale == null)
+			{
+				locale = "en";
 			}
 
 			try
@@ -120,13 +131,13 @@ namespace PLFHelper
 				{
 					while (!sr.EndOfStream)
 					{
-						string text = sr.ReadLine();
-						// One line comments will be ignored
+						var text = sr.ReadLine();
+						// Comments will be ignored
 						if (text.StartsWith("#") || text.StartsWith(";") || text.StartsWith("//") || text.StartsWith("*"))
 						{
 							continue;
 						}
-						Match match = regexStrings.Match(text);
+						var match = regexStrings.Match(text);
 						if (match.Groups["name"].Value == name)
 						{
 							return match.Groups["value"].Value;

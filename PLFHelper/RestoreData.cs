@@ -23,19 +23,45 @@ using System;
 
 namespace PLFHelper
 {
+	/// <summary>
+	/// Can hold data for restoring if application crashes.
+	/// </summary>
 	[Serializable()]
 	internal class RestoreData
 	{
+		/// <summary>
+		/// Gets/sets a string which describes the current game (for later versions).
+		/// </summary>
 		public string Game { get; set; }
 
+		/// <summary>
+		/// Gets/sets the current setting object.
+		/// </summary>
 		public Settings Settings { get; set; }
 
+		/// <summary>
+		/// Gets/sets an array of SpreadsheetEntry objects.
+		/// </summary>
 		public SpreadsheetEntry[] SheetEntries { get; set; }
 
+		/// <summary>
+		/// Gets/sets the current SpreadsheetsService object.
+		/// </summary>
 		public SpreadsheetsService SheetService { get; set; }
 
+		/// <summary>
+		/// Gets/sets the current value array.
+		/// </summary>
 		public float[] Values { get; set; }
 
+		/// <summary>
+		/// Creates a new instance of the RestoreData class.
+		/// </summary>
+		/// <param name="settings">The current Settings object.</param>
+		/// <param name="values">The current float-array with the values.</param>
+		/// <param name="game">The string with the currently selected game.</param>
+		/// <param name="sheetEntries">The current array of SpreadsheetEntry objects.</param>
+		/// <param name="sheetService">The current SpreadsheetService object.</param>
 		public RestoreData(Settings settings, float[] values, string game, SpreadsheetEntry[] sheetEntries, SpreadsheetsService sheetService)
 		{
 			this.Settings = settings;

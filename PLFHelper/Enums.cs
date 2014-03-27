@@ -21,19 +21,24 @@
 
 namespace PLFHelper
 {
+	/// <summary>
+	/// Specifies months.
+	/// </summary>
 	public enum Months
-    {
-        January = 1,
-        February,
-        March,
-        April,
-        May,
-        June,
-        July,
-        August,
-        September,
-        October,
-        November,
-        December
-    }
+	{
+		// This is starting at 0 and incrementing, so January will be 1 and December will be 12
+		None,
+		January,
+		February,
+		March,
+		April,
+		May,
+		June,
+		July,
+		August,
+		September,
+		October,
+		November,
+		December
+	}
 }

@@ -27,7 +27,7 @@ namespace Parser
 	/// <summary>
 	/// Provides the parser for Molehill Empire.
 	/// </summary>
-	public class ParserMH : Parser
+	public sealed class ParserMH : Parser
 	{
 		private readonly string[,] backForward = { { "<<< back", "forward >>>" }, { "<<< zurück", "weiter >>>" }, { "<<< terug", "verder >>>" } };
 		private readonly string[] currency = { "wT", "gB", "gB" };
@@ -41,6 +41,9 @@ namespace Parser
 		private readonly string[] welcomeOnBigMarketPlace = { "Welcome to the market place!", "Willkommen auf dem großen Marktplatz!", "Welkom op de marktplaats!" };
 
 		#region Properties
+		/// <summary>
+		/// Gets the language specific value for the "Back" string.
+		/// </summary>
 		private string Back
 		{
 			get
@@ -49,6 +52,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Forward" string.
+		/// </summary>
 		private string Forward
 		{
 			get
@@ -57,6 +63,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the in game currency.
+		/// </summary>
 		private string Currency
 		{
 			get
@@ -65,6 +74,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Current offers" string.
+		/// </summary>
 		private string CurrentOffers
 		{
 			get
@@ -73,6 +85,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Delete filter" string.
+		/// </summary>
 		private string DeleteFilter
 		{
 			get
@@ -81,6 +96,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "List of all players points" string.
+		/// </summary>
 		private string ListOfAllPlayersPoints
 		{
 			get
@@ -89,6 +107,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Players total" string.
+		/// </summary>
 		private string PlayersTotal
 		{
 			get
@@ -97,6 +118,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Show my ranking" string.
+		/// </summary>
 		private string ShowMyRanking
 		{
 			get
@@ -105,6 +129,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Total" string.
+		/// </summary>
 		private string Total
 		{
 			get
@@ -113,6 +140,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for all two words products.
+		/// </summary>
 		private string TwoWords
 		{
 			get
@@ -121,6 +151,9 @@ namespace Parser
 			}
 		}
 
+		/// <summary>
+		/// Gets the language specific value for the "Welcome on big marketplace" string.
+		/// </summary>
 		private string WelcomeOnBigMarketplace
 		{
 			get
@@ -130,6 +163,10 @@ namespace Parser
 		}
 		#endregion
 		#region Constructors
+		/// <summary>
+		/// Creates a new instance of the ParserMH class.
+		/// </summary>
+		/// <param name="lang">The language with which the parser should work.</param>
 		public ParserMH(Language lang)
 		{
 			if (lang == Language.unknown)
@@ -141,12 +178,22 @@ namespace Parser
 			this.ciInfo = new CultureInfo(this.ReturnLangCode());
 		}
 
+		/// <summary>
+		/// Creates a new instance of the ParserMH class.
+		/// </summary>
+		/// <param name="lang">The language with which the parser should work.</param>
+		/// <param name="playersIndex">The index of the players value in the values array.</param>
+		/// <param name="players1Index">The index of the last player with one points value in the values array.</param>
 		public ParserMH(Language lang, int playersIndex, int players1Index) : this(lang)
 		{
 			this.PlayersIndex = playersIndex;
 			this.Players1Index = players1Index;
 		}
 
+		/// <summary>
+		/// Creates a new instance of the ParserMH class.
+		/// </summary>
+		/// <param name="lang">The language with which the parser should work.</param>
 		public ParserMH(string lang)
 		{
 			switch (lang.ToUpper())
@@ -167,6 +214,12 @@ namespace Parser
 			this.ciInfo = new CultureInfo(this.ReturnLangCode());
 		}
 
+		/// <summary>
+		/// Creates a new instance of the ParserMH class.
+		/// </summary>
+		/// <param name="lang">The language with which the parser should work.</param>
+		/// <param name="playersIndex">The index of the players value in the values array.</param>
+		/// <param name="players1Index">The index of the last player with one points value in the values array.</param>
 		public ParserMH(string lang, int playersIndex, int players1Index) : this(lang)
 		{
 			this.PlayersIndex = playersIndex;
@@ -174,6 +227,7 @@ namespace Parser
 		}
 		#endregion
 
+		// This one gets its documentation from the abstract function in the base class "Parser".
 		public override bool Parse(string text, ref float[] values, string[] names)
 		{
 			if (this.PlayersIndex > -1 && this.Players1Index > -1)
@@ -193,6 +247,13 @@ namespace Parser
 			return false;
 		}
 
+		/// <summary>
+		/// Parses the market in molehill empire.
+		/// </summary>
+		/// <param name="match">The match.</param>
+		/// <param name="values">The values array by reference.</param>
+		/// <param name="names">The names array.</param>
+		/// <returns><c>true</c> if parsing was successful, <c>false</c> if not.</returns>
 		protected bool ParseMarket(Match match, ref float[] values, string[] names)
 		{
 			int nameIndex = this.SearchElementInArray(names, match.Groups["product"].Value);
@@ -206,12 +267,20 @@ namespace Parser
 			return (values[nameIndex] != temp); // Easy, huh?
 		}
 
+		/// <summary>
+		/// Parses the town hall in molehill empire.
+		/// </summary>
+		/// <param name="match">The match.</param>
+		/// <param name="text">The text which should be parsed.</param>
+		/// <param name="values">The values array by reference.</param>
+		/// <returns><c>true</c> if parsing was successful, <c>false</c> if not.</returns>
 		protected bool ParseTownHall(Match match, string text, ref float[] values)
 		{
 			float tempPlayer = values[this.PlayersIndex];
 			float tempPlayer1Index = values[this.Players1Index];
 			values[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, this.ciInfo);
 
+			// Let's move on to the last player with one point:
 			var player1PointRegex = new Regex(@"(?<position>\d+)\..+\s+1\s*\n");
 			if (player1PointRegex.IsMatch(text))
 			{
@@ -219,7 +288,8 @@ namespace Parser
 				Match player1PointMatch = player1PointMatches[player1PointMatches.Count - 1];
 				values[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value, this.ciInfo);
 			}
-			return (tempPlayer != values[this.PlayersIndex]) || (tempPlayer1Index != values[this.Players1Index]); // Also simple
+			// If ANYTHING changed return true
+			return (tempPlayer != values[this.PlayersIndex]) || (tempPlayer1Index != values[this.Players1Index]);
 		}
 	}
 }

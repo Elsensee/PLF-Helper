@@ -19,9 +19,7 @@
  * THE SOFTWARE.
  */
 using System;
-using System.IO;
 using System.Net.NetworkInformation;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace PLFHelper
@@ -48,13 +46,14 @@ namespace PLFHelper
 		/// <summary>
 		/// Checks if an internet connection exists
 		/// </summary>
-		/// <returns>true if internet connection exists, false if not</returns>
+		/// <returns><c>true</c> if internet connection exists, <c>false</c> if not</returns>
 		public static bool CheckInternetConnection()
 		{
 			try
 			{
-				using (Ping ping = new Ping())
+				using (var ping = new Ping())
 				{
+					// Will send a ping to google with max 250ms timeout
 					PingReply reply = ping.Send("www.google.de", 250);
 
 					return (reply.Status == IPStatus.Success);
@@ -62,6 +61,7 @@ namespace PLFHelper
 			}
 			catch
 			{
+				// Just return false
 				return false;
 			}
 		}

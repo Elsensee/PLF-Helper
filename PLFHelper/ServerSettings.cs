@@ -23,15 +23,17 @@ using System;
 namespace PLFHelper
 {
 	/// <summary>
-	/// Description of LevelSettings.
+	/// Settings per server
 	/// </summary>
 	[Serializable()]
-	internal class LevelSettings
+	internal class ServerSettings
 	{
 		private int level;
 		private int server;
-		private bool showPlants;
 
+		/// <summary>
+		/// Gets/sets the current level.
+		/// </summary>
 		public int Level
 		{
 			get
@@ -52,6 +54,9 @@ namespace PLFHelper
 			}
 		}
 
+		/// <summary>
+		/// Gets/sets the current server.
+		/// </summary>
 		public int Server
 		{
 			get
@@ -72,23 +77,21 @@ namespace PLFHelper
 			}
 		}
 
-		public bool ShowPlants
-		{
-			get
-			{
-				return this.showPlants;
-			}
+		/// <summary>
+		/// Gets/sets the current value of the ShowPlants-checkbox.
+		/// </summary>
+		public bool ShowPlants { get; set; }
 
-			set
-			{
-				this.showPlants = value;
-			}
-		}
-
-		public LevelSettings(int level, int server, bool showPlants)
+		/// <summary>
+		/// Creates a new instance of the ServerSettings class.
+		/// </summary>
+		/// <param name="server">The currently selected server.</param>
+		/// <param name="level">The currently selected level.</param>
+		/// <param name="showPlants">The current value of the ShowPlants-checkbox.</param>
+		public ServerSettings(int server, int level, bool showPlants)
 		{
-			this.Level = level;
 			this.Server = server;
+			this.Level = level;
 			this.ShowPlants = showPlants;
 		}
 	}

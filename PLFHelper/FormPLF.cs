@@ -24,10 +24,14 @@ using System.Windows.Forms;
 namespace PLFHelper
 {
 	/// <summary>
-	/// Description of MainForm.
+	/// This is the main form of the application
 	/// </summary>
 	public partial class FormPLF : Form
 	{
+		/// <summary>
+		/// Creates a new instance of the <c>FormPLF</c> class.
+		/// </summary>
+		/// <param name="internet"><c>true</c> if internet connection is available, <c>false</c> if not.</param>
 		public FormPLF(bool internet)
 		{
 			//

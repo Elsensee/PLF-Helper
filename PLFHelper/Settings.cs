@@ -25,7 +25,7 @@ using System.Text;
 namespace PLFHelper
 {
 	/// <summary>
-	/// Description of Settings.
+	/// A serzializable settings class.
 	/// </summary>
 	[Serializable()]
 	internal class Settings
@@ -35,12 +35,15 @@ namespace PLFHelper
 		private bool autoLogin = false;
 		private bool autoUpload = false;
 		private int lastServer = -1;
-		private LevelSettings[] level;
 		private byte[] password;
 		private bool[] remember = { false, false };
 		private bool saveServer = false;
+		private ServerSettings[] server;
 		private byte[] username;
 
+		/// <summary>
+		/// Gets if auto login is enabled.
+		/// </summary>
 		public bool AutoLogin
 		{
 			get
@@ -54,6 +57,9 @@ namespace PLFHelper
             }
 		}
 
+		/// <summary>
+		/// Gets if auto upload is enabled.
+		/// </summary>
 		public bool AutoUpload
 		{
 			get
@@ -67,6 +73,9 @@ namespace PLFHelper
 			}
 		}
 
+		/// <summary>
+		/// Gets the last selected server.
+		/// </summary>
 		public int LastServer
 		{
 			get
@@ -80,26 +89,9 @@ namespace PLFHelper
 			}
 		}
 
-		public LevelSettings[] Level
-		{
-			get
-			{
-				return this.level;
-			}
-
-			set
-			{
-				if (value != null && value.Length > 0)
-				{
-					this.level = value;
-				}
-				else
-				{
-					throw new ArgumentException("The array may not be null and must have at least one element", "value");
-				}
-			}
-		}
-
+		/// <summary>
+		/// Gets the password.
+		/// </summary>
 		public string Password
 		{
 			get
@@ -124,6 +116,9 @@ namespace PLFHelper
 			}
 		}
 
+		/// <summary>
+		/// Gets the state of both remember checkboxes.
+		/// </summary>
 		public bool[] Remember
 		{
 			get
@@ -144,6 +139,9 @@ namespace PLFHelper
 			}
 		}
 
+		/// <summary>
+		/// Gets if server should be saved.
+		/// </summary>
 		public bool SaveServer
 		{
 			get
@@ -157,6 +155,32 @@ namespace PLFHelper
 			}
 		}
 
+		/// <summary>
+		/// Gets the array of ServerSettings objects.
+		/// </summary>
+		public ServerSettings[] Server
+		{
+			get
+			{
+				return this.server;
+			}
+
+			set
+			{
+				if (value != null && value.Length > 0)
+				{
+					this.server = value;
+				}
+				else
+				{
+					throw new ArgumentException("The array may not be null and must have at least one element", "value");
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the username.
+		/// </summary>
 		public string Username
 		{
 			get
@@ -177,7 +201,18 @@ namespace PLFHelper
 			}
 		}
 
-		public Settings(bool[] remember, string username, string password, bool autoLogin, bool autoUpload, bool saveServer, int lastServer, LevelSettings[] level)
+		/// <summary>
+		/// Creates a new instance of the Settings class.
+		/// </summary>
+		/// <param name="remember">Array of <c>boolean</c> values which represent the state of both remember checkboxes.</param>
+		/// <param name="username">The username.</param>
+		/// <param name="password">The password.</param>
+		/// <param name="autoLogin"><c>true</c> if auto login is enabled, <c>false</c> if not.</param>
+		/// <param name="autoUpload"><c>true</c> if auto upload is enabled, <c>false</c> if not.</param>
+		/// <param name="saveServer"><c>true</c> if saving server is enabled, <c>false</c> if not.</param>
+		/// <param name="lastServer">The last selected server.</param>
+		/// <param name="server">Array of ServerSettings objects.</param>
+		public Settings(bool[] remember, string username, string password, bool autoLogin, bool autoUpload, bool saveServer, int lastServer, ServerSettings[] server)
 		{
 			this.Remember = remember;
 			this.Username = (this.Remember[0]) ? username : String.Empty;
@@ -186,7 +221,7 @@ namespace PLFHelper
 			this.AutoUpload = autoUpload;
 			this.SaveServer = saveServer;
 			this.LastServer = (this.SaveServer) ? lastServer : -1;
-			this.Level = level;
+			this.Server = server;
 		}
 	}
 }
