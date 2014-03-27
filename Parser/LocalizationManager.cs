@@ -28,19 +28,41 @@ using System.Text.RegularExpressions;
 namespace Parser
 {
 	/// <summary>
-	/// Description of LocalizationManager.
+	/// Own localization manager for getting localized strings.
+	/// No need for satellite assemblies, but embedded text files.
 	/// </summary>
 	internal static class LocalizationManager
 	{
-		private static Assembly assembly = Assembly.GetExecutingAssembly();
+		private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
 		private static string currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-		private const string fileName = "strings";
-		private static Regex regexStrings = new Regex("(?<name>\\S+?)\\s*?=\\s?(?<value>.+)");
+		private static string fileName = "strings";
+		private static readonly Regex regexStrings = new Regex("(?<name>\\S+?)\\s*?=\\s?(?<value>.+)");
+
+		/// <summary>
+		/// Gets or sets the file name. After setting the class will be re-initialized.
+		/// </summary>
+		public static string FileName
+		{
+			get
+			{
+				return fileName;
+			}
+			set
+			{
+				if (!String.IsNullOrEmpty(value))
+				{
+					fileName = value;
+					// We have to re-initialize this
+					Initialize();
+				}
+			}
+		}
 
 		/// <summary>
 		/// This method should be called as early as possible so we could tell the user what's really wrong.
 		/// However, if it's not called it's not THAT worse.
 		/// </summary>
+		/// <exception cref="MissingManifestResourceException">There was no default file with localizations found.</exception>
 		public static void Initialize()
 		{
 			string[] resources = assembly.GetManifestResourceNames();
@@ -48,14 +70,9 @@ namespace Parser
 			bool successEn = false;
 			for (int i = 0; i < resources.Length; i++)
 			{
-				if (resources[i].Contains(fileName + "_" + currentCulture + ".txt"))
-				{
-					success = true;
-				}
-				else if (resources[i].Contains(fileName + "_en.txt"))
-				{
-					successEn = true;
-				}
+				success |= resources[i].Contains(fileName + "_" + currentCulture + ".txt");
+				successEn |= resources[i].Contains(fileName + "_en.txt") || resources[i].Contains(fileName + ".txt");
+
 				if (success && successEn)
 				{
 					break;
@@ -99,13 +116,13 @@ namespace Parser
 
 			try
 			{
-				using (StreamReader sr = new StreamReader(assembly.GetManifestResourceStream(typeof(LocalizationManager).Namespace + "." + fileName + "_" + locale + ".txt")))
+				using (var sr = new StreamReader(assembly.GetManifestResourceStream(typeof(LocalizationManager).Namespace + "." + fileName + "_" + locale + ".txt")))
 				{
 					while (!sr.EndOfStream)
 					{
 						string text = sr.ReadLine();
 						// One line comments will be ignored
-						if (text.StartsWith("#") || text.StartsWith(";") || text.StartsWith("//"))
+						if (text.StartsWith("#") || text.StartsWith(";") || text.StartsWith("//") || text.StartsWith("*"))
 						{
 							continue;
 						}
@@ -117,21 +134,16 @@ namespace Parser
 					}
 				}
 			}
-			catch (FileNotFoundException ex)
+			catch (FileNotFoundException)
 			{
 				if (locale != "en")
 				{
 					return GetLocalizedString(name, "en");
 				}
-				throw ex;
+				throw;
 			}
 
-			if (locale != "en")
-			{
-				return GetLocalizedString(name, "en");
-			}
-
-			return null;
+			return (locale != "en") ? GetLocalizedString(name, "en") : null;
 		}
 	}
 }
