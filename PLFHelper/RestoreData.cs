@@ -30,11 +30,6 @@ namespace PLFHelper
 	internal class RestoreData
 	{
 		/// <summary>
-		/// Gets/sets a string which describes the current game (for later versions).
-		/// </summary>
-		public string Game { get; set; }
-
-		/// <summary>
 		/// Gets/sets the current setting object.
 		/// </summary>
 		public Settings Settings { get; set; }
@@ -59,14 +54,12 @@ namespace PLFHelper
 		/// </summary>
 		/// <param name="settings">The current Settings object.</param>
 		/// <param name="values">The current float-array with the values.</param>
-		/// <param name="game">The string with the currently selected game.</param>
 		/// <param name="sheetEntries">The current array of SpreadsheetEntry objects.</param>
 		/// <param name="sheetService">The current SpreadsheetService object.</param>
-		public RestoreData(Settings settings, float[] values, string game, SpreadsheetEntry[] sheetEntries, SpreadsheetsService sheetService)
+		public RestoreData(Settings settings, float[] values, SpreadsheetEntry[] sheetEntries, SpreadsheetsService sheetService)
 		{
 			this.Settings = settings;
 			this.Values = values;
-			this.Game = game;
 			this.SheetEntries = sheetEntries;
 			this.SheetService = SheetService;
 		}
