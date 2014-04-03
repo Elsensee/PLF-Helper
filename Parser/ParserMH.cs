@@ -254,7 +254,7 @@ namespace Parser
 		/// <param name="values">The values array by reference.</param>
 		/// <param name="names">The names array.</param>
 		/// <returns><c>true</c> if parsing was successful, <c>false</c> if not.</returns>
-		protected bool ParseMarket(Match match, ref float[] values, string[] names)
+		private bool ParseMarket(Match match, ref float[] values, string[] names)
 		{
 			int nameIndex = this.SearchElementInArray(names, match.Groups["product"].Value);
 			if (nameIndex == -1)
@@ -274,7 +274,7 @@ namespace Parser
 		/// <param name="text">The text which should be parsed.</param>
 		/// <param name="values">The values array by reference.</param>
 		/// <returns><c>true</c> if parsing was successful, <c>false</c> if not.</returns>
-		protected bool ParseTownHall(Match match, string text, ref float[] values)
+		private bool ParseTownHall(Match match, string text, ref float[] values)
 		{
 			float tempPlayer = values[this.PlayersIndex];
 			float tempPlayer1Index = values[this.Players1Index];
