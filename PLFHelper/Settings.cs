@@ -19,6 +19,9 @@
  * THE SOFTWARE.
  */
 using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -222,6 +225,72 @@ namespace PLFHelper
 			this.SaveServer = saveServer;
 			this.LastServer = (this.SaveServer) ? lastServer : -1;
 			this.Server = server;
+		}
+
+		/// <summary>
+		/// Saves the current settings object to <paramref name="path"/>.
+		/// </summary>
+		/// <param name="path">The path, the current settings object should be saved to.</param>
+		/// <exception cref="System.ArgumentNullException"><paramref name="path"/> is null.</exception>
+		public void Save(string path)
+		{
+			SaveSettings(this, path);
+		}
+
+		/// <summary>
+		/// Saves the given <paramref name="settingsObject"/> to <paramref name="path"/>.
+		/// </summary>
+		/// <param name="settingsObject">The settings object that sould be saved.</param>
+		/// <param name="path">The path, the given settings object should be saved to.</param>
+		/// <exception cref="System.ArgumentNullException"><paramref name="settingsObject"/> or <paramref name="path"/> is null.</exception>
+		public static void SaveSettings(Settings settingsObject, string path)
+		{
+			if (settingsObject == null)
+			{
+				throw new ArgumentNullException("settingsObject");
+			}
+			if (path == null)
+			{
+				throw new ArgumentNullException("path");
+			}
+
+			try
+			{
+				using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.Read, 8192, FileOptions.Encrypted))
+				{
+					// Yup - we don't need that object after that so just... don't save it
+					new BinaryFormatter().Serialize(fileStream, settingsObject);
+				}
+			}
+			// Not the finest way, but it's okay to just say nothing...
+			// We don't want to bother the user with that.
+			catch (SecurityException) { }
+		}
+
+		/// <summary>
+		/// Loads a settings object from a given <paramref name="path"/>.
+		/// </summary>
+		/// <param name="path">The path, the settings object should be loaded from.</param>
+		/// <returns>A new settings object with the data loaded from the file given in <paramref name="path"/>.</returns>
+		/// <exception cref="System.ArgumentNullException"><paramref name="path"/> is null.</exception>
+		/// <exception cref="System.IO.FileNotFoundException">The file in <paramref name="path"/> does not exist.</exception>
+		public static Settings LoadSettings(string path)
+		{
+			if (path == null)
+			{
+				throw new ArgumentNullException("path");
+			}
+
+			try
+			{
+				using (var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 8192, FileOptions.Encrypted))
+				{
+					// FileStream will be closed anyway.
+					return (Settings) new BinaryFormatter().Deserialize(fileStream);
+				}
+			}
+			// See above...
+			catch (SecurityException) { }
 		}
 	}
 }
