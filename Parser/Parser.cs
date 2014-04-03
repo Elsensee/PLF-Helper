@@ -88,10 +88,9 @@ namespace Parser
 		/// Parses a provided <paramref name="text"/> for the specific game.
 		/// </summary>
 		/// <param name="text">The text which should be parsed.</param>
-		/// <param name="values">The values array by reference in which the parsed value(s) should be written.</param>
-		/// <param name="names">A array of names like plants.</param>
-		/// <returns>Returns <c>true</c> if parsing was successful, <c>false</c> if not.</returns>
-		public abstract bool Parse(string text, ref float[] values, string[] names);
+		/// <param name="values">The float array with all values for plants and... you know...</param>
+		/// <returns>Returns the changed <paramref name="values"/> array.</returns>
+		public abstract float[] Parse(string text, float[] values);
 
 		/// <summary>
 		/// Returns the lang code for a CultureInfo object depending on the current lang variable.
