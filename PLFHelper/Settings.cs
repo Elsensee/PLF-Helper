@@ -98,8 +98,8 @@ namespace PLFHelper
 			{
 				try
 				{
-					SHA1Managed sha1 = new SHA1Managed();
-					string entropy = Encoding.UTF8.GetString(sha1.ComputeHash(this.username)) + "/" + addToEntropy;
+					var sha1 = new SHA1Managed();
+					var entropy = Encoding.UTF8.GetString(sha1.ComputeHash(this.username)) + "/" + addToEntropy;
 					return Encoding.UTF8.GetString(ProtectedData.Unprotect(this.password, sha1.ComputeHash(Encoding.UTF8.GetBytes(entropy)), DataProtectionScope.CurrentUser));
 				}
 				catch
@@ -110,8 +110,8 @@ namespace PLFHelper
 
 			set
 			{
-				SHA1Managed sha1 = new SHA1Managed();
-				string entropy = Encoding.UTF8.GetString(sha1.ComputeHash(this.username)) + "/" + addToEntropy;
+				var sha1 = new SHA1Managed();
+				var entropy = Encoding.UTF8.GetString(sha1.ComputeHash(this.username)) + "/" + addToEntropy;
 				this.password = ProtectedData.Protect(Encoding.UTF8.GetBytes(value), sha1.ComputeHash(Encoding.UTF8.GetBytes(entropy)), DataProtectionScope.CurrentUser);
 			}
 		}
