@@ -63,6 +63,13 @@ a:hover {
   color: #2268b2;
 }
 
+.header-a {
+  color: #0FF3CF;
+}
+.header-a:hover {
+  color: #B2B494;
+}
+
 header {
   padding-top: 40px;
   padding-bottom: 40px;
