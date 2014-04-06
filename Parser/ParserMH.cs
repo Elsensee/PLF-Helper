@@ -181,9 +181,11 @@ namespace Parser
 		/// <param name="names">String array of all the plant names.</param>
 		public ParserMH(Language lang, string[] names)
 		{
+			LocalizationManager.Initialize();
+
 			if (lang == Language.unknown)
 			{
-				throw new ArgumentException("No valid language given!", "lang");
+				throw new ArgumentException(LocalizationManager.GetLocalizedString("NoValidLanguage"), "lang");
 			}
 			this.lang = lang;
 
@@ -213,6 +215,8 @@ namespace Parser
 		/// <param name="names">String array of all the plant names.</param>
 		public ParserMH(string lang, string[] names)
 		{
+			LocalizationManager.Initialize();
+
 			switch (lang.ToUpper())
 			{
 				case "EN":
@@ -225,7 +229,7 @@ namespace Parser
 					this.lang = Language.NL;
 					break;
 				default:
-					throw new ArgumentException("No valid language given!", "lang");
+					throw new ArgumentException(LocalizationManager.GetLocalizedString("NoValidLanguage"), "lang");
 			}
 
 			this.ciInfo = new CultureInfo(this.ReturnLangCode());

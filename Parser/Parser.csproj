@@ -39,5 +39,11 @@
     <Compile Include="ParserMH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="strings.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="strings_de.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

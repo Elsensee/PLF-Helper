@@ -57,7 +57,7 @@ namespace PLFHelper
 			// Unfortunately we cannot check if password is not null.
 			if (service.Credentials == null || service.Credentials.Username == null)
 			{
-				throw new ArgumentException("The service does not provide authentication", "service");
+				throw new ArgumentException(LocalizationManager.GetLocalizedString("ServiceNoAuthentication"), "service");
 			}
 			this.service = service;
 		}

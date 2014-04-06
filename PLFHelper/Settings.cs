@@ -137,7 +137,7 @@ namespace PLFHelper
 				}
 				else
 				{
-					throw new ArgumentException("The array must have two elements.", "value");
+					throw new ArgumentException(LocalizationManager.GetLocalizedString("ArrayTwoElements"), "value");
 				}
 			}
 		}
@@ -176,7 +176,7 @@ namespace PLFHelper
 				}
 				else
 				{
-					throw new ArgumentException("The array may not be null and must have at least one element", "value");
+					throw new ArgumentException(LocalizationManager.GetLocalizedString("ArrayNotNull"), "value");
 				}
 			}
 		}

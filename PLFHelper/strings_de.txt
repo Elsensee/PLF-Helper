@@ -1,0 +1,3 @@
+﻿ArrayTwoElements=Das Array muss zwei Elemente haben.
+ArrayNotNull=Das Array darf nicht null sein und muss mindestens ein Element besitzen.
+ServiceNoAuthentication=The service does not provide authentication
