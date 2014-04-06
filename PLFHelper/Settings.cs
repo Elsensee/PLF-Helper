@@ -290,7 +290,12 @@ namespace PLFHelper
 				}
 			}
 			// See above...
-			catch (SecurityException) { }
+			catch (SecurityException)
+			{
+				// we have to return something... but we can't do some random settings...
+				// so we just return null.
+				return null;
+			}
 		}
 	}
 }

@@ -83,7 +83,10 @@ namespace PLFHelper
 				query.Title = title;
 			}
 			SpreadsheetFeed feed = this.service.Query(query);
-			return (SpreadsheetEntry[]) feed.Entries;
+			// Have to use this "dirty" workaround...
+			var result = new SpreadsheetEntry[feed.Entries.Count];
+			feed.Entries.CopyTo(result, 0);
+			return result;
 		}
 
 		/// <summary>
@@ -98,7 +101,9 @@ namespace PLFHelper
 				spreadsheet = GetSpreadsheets()[0];
 			}
 
-			return (WorksheetEntry[]) spreadsheet.Worksheets.Entries;
+			var result = new WorksheetEntry[spreadsheet.Worksheets.Entries.Count];
+			spreadsheet.Worksheets.Entries.CopyTo(result, 0);
+			return result;
 		}
 
 		/// <summary>
@@ -110,11 +115,13 @@ namespace PLFHelper
 		{
 			if (worksheet == null)
 			{
-				worksheet = GetWorksheets()[0];
+				worksheet = GetWorksheets(null)[0];
 			}
 
 			this.cellFeed = this.service.Query(new CellQuery(worksheet.CellFeedLink));
-			return (CellEntry[]) this.cellFeed.Entries;
+			var result = new CellEntry[this.cellFeed.Entries.Count];
+			this.cellFeed.Entries.CopyTo(result, 0);
+			return result;
 		}
 
 		/// <summary>
@@ -155,7 +162,7 @@ namespace PLFHelper
 			}
 			if (cellEntries.Count == 0)
 			{
-				throw new ArgumentOutOfRangeException("cellEntries", cellEntries.Count);
+				throw new ArgumentOutOfRangeException("cellEntries.Count");
 			}
 			if (cellEntries.Count == 1)
 			{
@@ -208,7 +215,7 @@ namespace PLFHelper
 					}
 					if (this.cellFeed != null)
 					{
-						this.cellFeed != null;
+						this.cellFeed = null;
 					}
 				}
 				this.disposed = true;
