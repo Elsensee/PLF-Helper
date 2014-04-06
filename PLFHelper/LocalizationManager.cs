@@ -104,7 +104,7 @@ namespace PLFHelper
 		/// <returns>Returns the localized string in the given culture or in english if it wasn't found in the given culture.</returns>
 		/// <exception cref="System.ArgumentNullException">name is null.</exception>
 		/// <exception cref="System.IO.FileNotFoundException">The file wasn't found in the res</exception>
-		public static string GetLocalizedString(string name, string locale = currentCulture, bool fileWithoutSuffix = false)
+		public static string GetLocalizedString(string name, string locale = null, bool fileWithoutSuffix = false)
 		{
 			// If name is null we won't find any string...
 			if (name == null)
