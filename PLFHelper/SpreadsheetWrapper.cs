@@ -155,7 +155,7 @@ namespace PLFHelper
 			}
 			if (cellEntries.Count == 0)
 			{
-				throw new ArgumentOutOfRangeException("cellEntries.Count", cellEntries.Count);
+				throw new ArgumentOutOfRangeException("cellEntries", cellEntries.Count);
 			}
 			if (cellEntries.Count == 1)
 			{
