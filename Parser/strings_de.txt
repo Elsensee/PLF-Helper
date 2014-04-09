@@ -1,1 +1,0 @@
-﻿NoValidLanguage=Keine gültige Sprache angegeben!

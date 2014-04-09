@@ -21,7 +21,7 @@
 using System;
 using System.Globalization;
 
-namespace Parser
+namespace PLFHelper.Parser
 {
 	/// <summary>
 	/// Provides a common parser.

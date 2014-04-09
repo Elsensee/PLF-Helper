@@ -67,6 +67,8 @@
     <Compile Include="FormPLF.Designer.cs">
       <DependentUpon>FormPLF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\ParserMH.cs" />
     <Compile Include="ServerSettings.cs" />
     <Compile Include="LocalizationManager.cs" />
     <Compile Include="Program.cs" />
@@ -88,6 +90,9 @@
       <Project>{C107B887-72CC-4907-94BC-BC97C8117D99}</Project>
       <Name>Parser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Parser" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

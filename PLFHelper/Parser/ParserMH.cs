@@ -23,7 +23,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Parser
+namespace PLFHelper.Parser
 {
 	/// <summary>
 	/// Provides the parser for Molehill Empire.
