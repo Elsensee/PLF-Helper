@@ -27,7 +27,7 @@ using System.Text;
 
 using PLFHelper.Localization;
 
-namespace PLFHelper
+namespace PLFHelper.Settings
 {
 	/// <summary>
 	/// A serzializable settings class.
