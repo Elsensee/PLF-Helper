@@ -82,8 +82,8 @@
     <None Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Localization\strings.txt" />
-    <None Include="Localization\strings_de.txt" />
+    <EmbeddedResource Include="Localization\strings.txt" />
+    <EmbeddedResource Include="Localization\strings_de.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Parser\Parser.csproj">
