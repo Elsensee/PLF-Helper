@@ -20,7 +20,7 @@
  */
 using System;
 
-namespace PLFHelper.Settings
+namespace PLFHelper.Configuration
 {
 	/// <summary>
 	/// Settings per server

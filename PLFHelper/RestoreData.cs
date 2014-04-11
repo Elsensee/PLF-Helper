@@ -25,6 +25,8 @@ using System.Security;
 
 using Google.GData.Spreadsheets;
 
+using PLFHelper.Configuration;
+
 namespace PLFHelper
 {
 	/// <summary>
