@@ -67,10 +67,10 @@
     <Compile Include="FormPLF.Designer.cs">
       <DependentUpon>FormPLF.cs</DependentUpon>
     </Compile>
+    <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\ParserMH.cs" />
     <Compile Include="ServerSettings.cs" />
-    <Compile Include="LocalizationManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestoreData.cs" />
@@ -82,8 +82,8 @@
     <None Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <EmbeddedResource Include="strings.txt" />
-    <EmbeddedResource Include="strings_de.txt" />
+    <None Include="Localization\strings.txt" />
+    <None Include="Localization\strings_de.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Parser\Parser.csproj">
@@ -92,6 +92,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Localization" />
     <Folder Include="Parser" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

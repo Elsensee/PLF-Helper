@@ -23,6 +23,8 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
+using PLFHelper.Localization;
+
 namespace PLFHelper.Parser
 {
 	/// <summary>

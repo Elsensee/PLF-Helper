@@ -24,7 +24,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace PLFHelper
+namespace PLFHelper.Localization
 {
 	/// <summary>
 	/// Own localization manager for getting localized strings.

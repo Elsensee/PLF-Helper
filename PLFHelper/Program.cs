@@ -22,6 +22,8 @@ using System;
 using System.Net.NetworkInformation;
 using System.Windows.Forms;
 
+using PLFHelper.Localization;
+
 namespace PLFHelper
 {
 	/// <summary>

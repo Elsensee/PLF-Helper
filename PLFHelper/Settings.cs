@@ -25,6 +25,8 @@ using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
+using PLFHelper.Localization;
+
 namespace PLFHelper
 {
 	/// <summary>
