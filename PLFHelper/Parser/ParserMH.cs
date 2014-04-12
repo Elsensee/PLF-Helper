@@ -45,6 +45,7 @@ namespace PLFHelper.Parser
 		private readonly string twoWords;
 		private readonly string[] welcomeOnBigMarketPlace = { "Welcome to the market place!", "Willkommen auf dem großen Marktplatz!", "Welkom op de marktplaats!" };
 
+		#region Properties
 		/// <summary>
 		/// Gets if the parsing was successful
 		/// </summary>
@@ -53,7 +54,6 @@ namespace PLFHelper.Parser
 			get; private set;
 		}
 
-		#region Properties
 		/// <summary>
 		/// Gets the language specific value for the "Back" string.
 		/// </summary>
