@@ -35,7 +35,8 @@ namespace PLFHelper.Localization
 		private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
 		private static string currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 		private static string fileName = "strings";
-		private static readonly Regex regexStrings = new Regex("(?<name>\\S+?)\\s*?=\\s?(?<value>.+)");
+		// Verbatim string to avoid double backslash
+		private static readonly Regex regexStrings = new Regex(@"(?<name>\S+?)\s*?=\s?(?<value>.+)");
 
 		/// <summary>
 		/// Gets or sets the file name. After setting the class will be re-initialized.
