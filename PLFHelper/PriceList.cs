@@ -207,7 +207,7 @@ namespace PLFHelper
 			var cellEntries = new List<CellEntry>(values.Length);
 			for (int i = 0; i < order.Length; i++)
 			{
-				cellEntries.Add(new CellEntry(FIRST_ROW + i, column, values[order[i]].ToString(ciInfo)));
+				cellEntries.Add(new CellEntry(FIRST_ROW + (uint)i, column, values[order[i]].ToString(ciInfo)));
 			}
 
 			this.helper.UpdateCells(this.currentWorksheet, cellEntries);
