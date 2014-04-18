@@ -31,7 +31,7 @@ namespace PLFHelper
 	/// <summary>
 	/// Class which wraps the Spreadsheet classes provided by the Google Data API.
 	/// </summary>
-	public class SpreadsheetWrapper : IDisposable
+	internal class SpreadsheetHelper : IDisposable
 	{
 		protected const string appName = "Preistenlistenpfleger-Helper";
 		protected CellFeed cellFeed;
@@ -43,7 +43,7 @@ namespace PLFHelper
 		/// </summary>
 		/// <param name="username">The username which should be used to login.</param>
 		/// <param name="password">The password which should be used to login.</param>
-		public SpreadsheetWrapper(string username, string password)
+		public SpreadsheetHelper(string username, string password)
 		{
 			this.service = new SpreadsheetsService(appName);
 			this.service.setUserCredentials(username, password);
@@ -55,7 +55,7 @@ namespace PLFHelper
 		/// </summary>
 		/// <param name="service">The <typeparamref name="Google.GData.Spreadsheets.SpreadsheetsService" /> object with which the instance should be created.</param>
 		/// <exception cref="System.ArgumentException">The service doesn't provide any authentication</exception>
-		public SpreadsheetWrapper(SpreadsheetsService service)
+		public SpreadsheetHelper(SpreadsheetsService service)
 		{
 			// Unfortunately we cannot check if password is not null.
 			if (service.Credentials == null || service.Credentials.Username == null)
@@ -121,7 +121,29 @@ namespace PLFHelper
 				worksheet = GetWorksheets(null)[0];
 			}
 
-			this.cellFeed = this.service.Query(new CellQuery(worksheet.CellFeedLink));
+			var query = new CellQuery(worksheet.CellFeedLink);
+			query.ReturnEmpty = ReturnEmptyCells.yes;
+
+			this.cellFeed = this.service.Query(query);
+			var result = new CellEntry[this.cellFeed.Entries.Count];
+			this.cellFeed.Entries.CopyTo(result, 0);
+			return result;
+		}
+
+		/// <summary>
+		/// Get cells in the given <paramref name="worksheet" />.
+		/// </summary>
+		/// <param name="query">The <typeparamref name="Google.GData.Spreadsheets.CellQuery" /> which should be executed.</param>
+		/// <returns>Returns a <typeparamref name="Google.GData.Spreadsheets.CellEntry" /> array.</returns>
+		/// <exception cref="System.ArgumentNullException"><paramref name="query"/> is null.</exception>
+		public virtual CellEntry[] GetCells(CellQuery query)
+		{
+			if (query == null)
+			{
+				throw new ArgumentNullException("query");
+			}
+
+			this.cellFeed = this.service.Query(query);
 			var result = new CellEntry[this.cellFeed.Entries.Count];
 			this.cellFeed.Entries.CopyTo(result, 0);
 			return result;

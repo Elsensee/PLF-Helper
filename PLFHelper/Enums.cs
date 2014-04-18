@@ -18,9 +18,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+using System;
 
 namespace PLFHelper
 {
+	/// <summary>
+	/// Specifies the CellQueryType
+	/// </summary>
+	[Flags]
+	public enum CellQueryType
+	{
+		DateRow = 0x1,
+		PlantsColumn = 0x2,
+		All = DateRow | PlantsColumn,
+	}
+
 	/// <summary>
 	/// Specifies months.
 	/// </summary>

@@ -73,12 +73,13 @@
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\ParserMH.cs" />
+    <Compile Include="PriceList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestoreData.cs" />
     <Compile Include="Configuration\ServerSettings.cs" />
     <Compile Include="Configuration\Settings.cs" />
-    <Compile Include="SpreadsheetWrapper.cs" />
+    <Compile Include="SpreadsheetHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
