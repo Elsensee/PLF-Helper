@@ -20,6 +20,7 @@
  */
 using System;
 using System.Globalization;
+using System.Text;
 
 namespace PLFHelper.Parser
 {
@@ -91,6 +92,43 @@ namespace PLFHelper.Parser
 		/// <param name="values">The float array with all values for plants and... you know...</param>
 		/// <returns>Returns the changed <paramref name="values"/> array.</returns>
 		public abstract float[] Parse(string text, float[] values);
+
+		/// <summary>
+		/// Filters all "two word" plants and prepare them for the regular expression.
+		/// </summary>
+		/// <param name="names">An string array of all the "two word" plants in the current language.</param>
+		/// <returns>Returns a string with all "two word" plants prepared for the regular expression.</returns>
+		protected static string FilterTwoWords(string[] names)
+		{
+			int iterations = 0;
+
+			while (iterations < names.Length)
+			{
+				if (names[iterations].Contains(" "))
+				{
+					break;
+				}
+				iterations++;
+			}
+			if (iterations >= names.Length)
+			{
+				return String.Empty;
+			}
+
+			var builder = new StringBuilder(names[iterations]);
+			iterations++;
+
+			while (iterations < names.Length)
+			{
+				if (names[iterations].Contains(" "))
+				{
+					builder.Append("|" + names[iterations]);
+				}
+				iterations++;
+			}
+
+			return builder.ToString();
+		}
 
 		/// <summary>
 		/// Returns the lang code for a CultureInfo object depending on the current lang variable.

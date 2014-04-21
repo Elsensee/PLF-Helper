@@ -20,7 +20,6 @@
  */
 using System;
 using System.Globalization;
-using System.Text;
 using System.Text.RegularExpressions;
 
 using PLFHelper.Localization;
@@ -253,43 +252,6 @@ namespace PLFHelper.Parser
 			this.Players1Index = players1Index;
 		}
 		#endregion
-
-		/// <summary>
-		/// Filters all "two word" plants and prepare them for the regular expression.
-		/// </summary>
-		/// <param name="names">An string array of all the "two word" plants in the current language.</param>
-		/// <returns>Returns a string with all "two word" plants prepared for the regular expression.</returns>
-		private static string FilterTwoWords(string[] names)
-		{
-			int iterations = 0;
-
-			while (iterations < names.Length)
-			{
-				if (names[iterations].Contains(" "))
-				{
-					break;
-				}
-				iterations++;
-			}
-			if (iterations >= names.Length)
-			{
-				return String.Empty;
-			}
-
-			var builder = new StringBuilder(names[iterations]);
-			iterations++;
-
-			while (iterations < names.Length)
-			{
-				if (names[iterations].Contains(" "))
-				{
-					builder.Append("|" + names[iterations]);
-				}
-				iterations++;
-			}
-
-			return builder.ToString();
-		}
 
 		// This one gets its documentation from the abstract function in the base class "Parser".
 		public override float[] Parse(string text, float[] values)
