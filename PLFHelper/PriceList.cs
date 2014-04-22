@@ -274,32 +274,5 @@ namespace PLFHelper
 
 			this.helper.UpdateCells(this.currentWorksheet, cellEntries);
 		}
-
-		#region IDisposable implementation
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		// Every code example contains this function aswell.
-		// So I included it here - don't know why we need this,
-		// so no documentation here. lol.
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!this.disposed)
-			{
-				if (disposing)
-				{
-					if (this.helper != null)
-					{
-						this.helper.Dispose();
-						this.helper = null;
-					}
-				}
-				this.disposed = true;
-			}
-		}
-		#endregion
 	}
 }

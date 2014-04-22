@@ -216,36 +216,5 @@ namespace PLFHelper
 			}
 			#endif
 		}
-
-		#region IDisposable implementation
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		// Every code example contains this function aswell.
-		// So I included it here - don't know why we need this,
-		// so no documentation here. lol.
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!this.disposed)
-			{
-				if (disposing)
-				{
-					if (this.service != null)
-					{
-						this.service.setUserCredentials(null, null);
-						this.service = null;
-					}
-					if (this.cellFeed != null)
-					{
-						this.cellFeed = null;
-					}
-				}
-				this.disposed = true;
-			}
-		}
-		#endregion
 	}
 }
