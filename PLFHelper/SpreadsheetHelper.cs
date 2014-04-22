@@ -39,7 +39,7 @@ namespace PLFHelper
 		protected SpreadsheetsService service;
 
 		/// <summary>
-		/// Creates a new instance of the SpreadsheetWrapper class with a username and a password to login.
+		/// Creates a new instance of the SpreadsheetHelper class with a username and a password to login.
 		/// </summary>
 		/// <param name="username">The username which should be used to login.</param>
 		/// <param name="password">The password which should be used to login.</param>
@@ -51,7 +51,7 @@ namespace PLFHelper
 		}
 
 		/// <summary>
-		/// Creates a new instance of the SpreadsheetWrapper class with a already existing <typeparamref name="Google.GData.Spreadsheets.SpreadsheetsService" /> object.
+		/// Creates a new instance of the SpreadsheetHelper class with an already existing <typeparamref name="Google.GData.Spreadsheets.SpreadsheetsService" /> object.
 		/// </summary>
 		/// <param name="service">The <typeparamref name="Google.GData.Spreadsheets.SpreadsheetsService" /> object with which the instance should be created.</param>
 		/// <exception cref="System.ArgumentException">The service doesn't provide any authentication</exception>
