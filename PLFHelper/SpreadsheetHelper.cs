@@ -31,11 +31,10 @@ namespace PLFHelper
 	/// <summary>
 	/// Class which wraps the Spreadsheet classes provided by the Google Data API.
 	/// </summary>
-	internal class SpreadsheetHelper : IDisposable
+	internal class SpreadsheetHelper
 	{
 		protected const string appName = "Preistenlistenpfleger-Helper";
 		protected CellFeed cellFeed;
-		protected bool disposed = false;
 		protected SpreadsheetsService service;
 
 		/// <summary>

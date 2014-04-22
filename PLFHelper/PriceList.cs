@@ -31,11 +31,10 @@ namespace PLFHelper
 	/// <summary>
 	/// Description of PriceList.
 	/// </summary>
-	public class PriceList : IDisposable
+	public class PriceList
 	{
 		protected SpreadsheetEntry currentSpreadsheet;
 		protected WorksheetEntry currentWorksheet;
-		private bool disposed;
 		private const uint FIRST_ROW = 3u;
 		private SpreadsheetHelper helper;
 		protected string languageServer;
