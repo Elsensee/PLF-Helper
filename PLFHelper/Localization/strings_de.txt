@@ -1,4 +1,4 @@
-﻿ArrayTwoElements=The array must have two elements.
-ArrayNotNull=The array may not be null and must have at least one element
+﻿ArrayTwoElements=Das Array muss zwei Elemente haben.
+ArrayNotNull=Das Array darf nicht null sein und muss mindestens ein Element besitzen.
 NoValidLanguage=Keine gültige Sprache angegeben!
-ServiceNoAuthentication=The service does not provide authentication
+ServiceNoAuthentication=Der Service besitzt keine Authentifizerung.
