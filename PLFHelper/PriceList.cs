@@ -24,6 +24,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 using Google.GData.Spreadsheets;
+using PLFHelper.Localization;
 
 namespace PLFHelper
 {
@@ -133,8 +134,7 @@ namespace PLFHelper
 			// Just in case...
 			if (!this.serverRegex.IsMatch(entry.Title.Text))
 			{
-				// TODO: Add text
-				throw new ArgumentException();
+				throw new ArgumentException(LocalizationManager.GetLocalizedFormatString("IsNoPricelist", entry.Title.Text));
 			}
 
 			if (this.currentSpreadsheet != entry)
@@ -252,8 +252,7 @@ namespace PLFHelper
 		{
 			if (order.Length != values.Length)
 			{
-				// TODO: Add text
-				throw new ArgumentException();
+				throw new ArgumentException(LocalizationManager.GetLocalizedFormatString("LengthNotEqualToLength", "order", "values"));
 			}
 
 			var ciInfo = CultureInfo.GetCultureInfo("de-DE");

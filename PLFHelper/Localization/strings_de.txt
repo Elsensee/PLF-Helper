@@ -1,4 +1,6 @@
 ﻿ArrayTwoElements=Das Array muss zwei Elemente haben.
 ArrayNotNull=Das Array darf nicht null sein und muss mindestens ein Element besitzen.
+IsNoPriceList={0} ist keine Preisliste.
+LengthNotEqualToLength=Die Länge von {0} ist nicht gleich der Länge von {1}.
 NoValidLanguage=Keine gültige Sprache angegeben!
 ServiceNoAuthentication=Der Service besitzt keine Authentifizerung.

@@ -104,7 +104,7 @@ namespace PLFHelper.Localization
 		/// Please don't speify that parameter by yourself.</param>
 		/// <returns>Returns the localized string in the given culture or in english if it wasn't found in the given culture.</returns>
 		/// <exception cref="System.ArgumentNullException">name is null.</exception>
-		/// <exception cref="System.IO.FileNotFoundException">The file wasn't found in the res</exception>
+		/// <exception cref="System.IO.FileNotFoundException">The file wasn't found in the resources.</exception>
 		public static string GetLocalizedString(string name, string locale = null, bool fileWithoutSuffix = false)
 		{
 			// If name is null we won't find any string...
@@ -154,6 +154,19 @@ namespace PLFHelper.Localization
 			}
 
 			return (locale != "en") ? GetLocalizedString(name, "en", false) : ((locale == "en" && !fileWithoutSuffix) ? GetLocalizedString(name, "en", true) : null);
+		}
+
+		/// <summary>
+		/// Gets a localized and formatted string.
+		/// </summary>
+		/// <param name="name">The name of the string.</param>
+		/// <param name="args">A object array with 0 or more objects to format.</param>
+		/// <returns>Returns the localized and formatted string in the given culture or in english if it wasn't found in the given culture.</returns>
+		/// <exception cref="System.ArgumentNullException">name is null.</exception>
+		/// <exception cref="System.IO.FileNotFoundException">The file wasn't found in the resources.</exception>
+		public static string GetLocalizedFormatString(string name, params object[] args)
+		{
+			return String.Format(GetLocalizedString(name), args);
 		}
 	}
 }
