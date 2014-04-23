@@ -122,7 +122,8 @@ namespace PLFHelper.Parser
 			{
 				if (names[iterations].Contains(" "))
 				{
-					builder.Append("|" + names[iterations]);
+					builder.Append('|');
+					builder.Append(names[iterations]);
 				}
 				iterations++;
 			}
