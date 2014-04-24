@@ -21,6 +21,7 @@
 using System;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PLFHelper.Parser
 {
@@ -31,9 +32,6 @@ namespace PLFHelper.Parser
 	{
 		protected CultureInfo ciInfo;
 		protected Language lang;
-		protected string[] lastSearchArray;
-		protected string lastSearchElementInArray;
-		protected int lastResultElementInArray = -1;
 		protected int playersIndex = -1;
 		protected int players1Index = -1;
 
@@ -123,7 +121,7 @@ namespace PLFHelper.Parser
 				if (names[iterations].Contains(" "))
 				{
 					builder.Append('|');
-					builder.Append(names[iterations]);
+					builder.Append(Regex.Escape(names[iterations]));
 				}
 				iterations++;
 			}
@@ -158,19 +156,10 @@ namespace PLFHelper.Parser
 		/// <returns></returns>
 		protected virtual int SearchElementInArray(string[] searchArray, string searchString)
 		{
-			// This is a cache.. or something like that...
-			// Works only if the last search is the same.
-			if (searchArray == this.lastSearchArray && String.Compare(searchString, lastSearchElementInArray, false) == 0)
-			{
-				return this.lastResultElementInArray;
-			}
 			for (int i = 0; i < searchArray.Length; i++)
 			{
-				if (String.Compare(searchString, searchArray[i], false) == 0)
+				if (String.Compare(searchString, searchArray[i], this.ciInfo, CompareOptions.IgnoreCase) == 0)
 				{
-					this.lastSearchArray = searchArray;
-					this.lastSearchElementInArray = searchString;
-					this.lastResultElementInArray = i;
 					return i;
 				}
 			}
