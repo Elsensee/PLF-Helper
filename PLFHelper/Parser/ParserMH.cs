@@ -258,8 +258,8 @@ namespace PLFHelper.Parser
 		{
 			if (this.PlayersIndex > -1 && this.Players1Index > -1)
 			{
-				var marketRegex = new Regex(@"\n[\d\.]+\s+(?<product>(" + this.TwoWords + @"\S+))\s+.+?\s+(?<value>[\d\.,]{3,}) " + Regex.Escape(this.Currency) + @"\s+[\d\.,]{3,} " + Regex.Escape(this.Currency) + @"\s+[^\n]+\n", RegexOptions.IgnoreCase);
-				var townhallRegex = new Regex(Regex.Escape(this.PlayersTotal) + @"\s+(?<player>\d+)\s+" + Regex.Escape(this.ShowMyRanking), RegexOptions.IgnoreCase);
+				var marketRegex = new Regex(@"^[\d.,]+\s+(?<product>" + this.TwoWords + @"\S+).+(?<value>[\d.,]{3,}) " + Regex.Escape(this.Currency) + @"\s+[\d.,]{3,} " + Regex.Escape(this.Currency) + ".+$", RegexOptions.Multiline);
+				var townhallRegex = new Regex("^" + Regex.Escape(this.PlayersTotal) + @" (?<player>\d+).+$", RegexOptions.Multiline);
 
 				if (marketRegex.IsMatch(text))
 				{
@@ -309,11 +309,10 @@ namespace PLFHelper.Parser
 			values[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, this.ciInfo);
 
 			// Let's move on to the last player with one point:
-			var player1PointRegex = new Regex(@"(?<position>\d+)\..+\s+1\s*\n");
+			var player1PointRegex = new Regex(@"^(?<position>\d+)[.,].+\s+1$", RegexOptions.Multiline | RegexOptions.RightToLeft);
 			if (player1PointRegex.IsMatch(text))
 			{
-				MatchCollection player1PointMatches = player1PointRegex.Matches(text);
-				Match player1PointMatch = player1PointMatches[player1PointMatches.Count - 1];
+				var player1PointMatch = player1PointRegex.Match(text);
 				values[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value, this.ciInfo);
 			}
 			// If ANYTHING set Successful to true.
