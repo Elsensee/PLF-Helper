@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 
 using PLFHelper.Localization;
 
-namespace PLFHelper.Parser
+namespace PLFHelper.Parsers
 {
 	/// <summary>
 	/// Provides the parser for Molehill Empire.

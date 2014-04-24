@@ -23,7 +23,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace PLFHelper.Parser
+namespace PLFHelper.Parsers
 {
 	/// <summary>
 	/// Provides a common parser.

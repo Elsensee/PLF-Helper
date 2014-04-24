@@ -70,8 +70,8 @@
       <DependentUpon>FormPLF.cs</DependentUpon>
     </Compile>
     <Compile Include="Localization\LocalizationManager.cs" />
-    <Compile Include="Parser\Parser.cs" />
-    <Compile Include="Parser\ParserMH.cs" />
+    <Compile Include="Parsers\Parser.cs" />
+    <Compile Include="Parsers\ParserMH.cs" />
     <Compile Include="PriceList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,7 +91,7 @@
   <ItemGroup>
     <Folder Include="Localization" />
     <Folder Include="Configuration" />
-    <Folder Include="Parser" />
+    <Folder Include="Parsers" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
