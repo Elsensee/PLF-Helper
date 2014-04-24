@@ -31,50 +31,17 @@ namespace PLFHelper.Parser
 	/// </summary>
 	public sealed class ParserMH : Parser
 	{
-		private readonly string[,] backForward = { { "<<< back", "forward >>>" }, { "<<< zurück", "weiter >>>" }, { "<<< terug", "verder >>>" } };
 		private readonly string[] currency = { "wT", "gB", "gB" };
-		private readonly string[] currentOffers = { "Current offers", "Aktuelle Angebote", "Huidige aanbiedingen" };
-		private readonly string[] deleteFilter = { "[Delete filter - show all offers]", "[Filter löschen - alle Angebote zeigen]", "[Verwijder filter - laat alle aanbiedingen zien]" };
 		private readonly string[] listOfAllPlayersPoints = { "List of all players according to score", "Liste aller Spieler nach Punktzahl", "Lijst met alle spelers gesorteerd op de hoogte van de scores" };
 		private readonly string[] names;
 		private readonly string[] playersTotal = { "Players total:", "Spieler gesamt:", "Spelers totaal:" };
-		private readonly string[] showMyRanking = { "Show my ranking", "wo bin ich?", "Waar ben ik?" };
-		private readonly string[] total = { "Total", "Gesamt", "Totaal" };
-		//private readonly string[] twoWords = { "Red cabbage|Red currants|Gerber daisy|Cow lily|Water parsnip|Water violet|Water soldier|Water lily|Water knotweed|Marsh marigold|Swamp lantern|Angel's trumpet", "gelbe Teichrose", "Koe lelie|Water pastinaak|Rode aalbes|Rode kool" };
 		private readonly string twoWords;
-		private readonly string[] welcomeOnBigMarketPlace = { "Welcome to the market place!", "Willkommen auf dem großen Marktplatz!", "Welkom op de marktplaats!" };
+		// Regular expressions
+		private readonly Regex regexMarket;
+		private readonly Regex regexPlayerOnePoint;
+		private readonly Regex regexTownHall;
 
 		#region Properties
-		/// <summary>
-		/// Gets if the parsing was successful
-		/// </summary>
-		public bool Successful
-		{
-			get; private set;
-		}
-
-		/// <summary>
-		/// Gets the language specific value for the "Back" string.
-		/// </summary>
-		private string Back
-		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.backForward[(int) this.lang, 0] : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets the language specific value for the "Forward" string.
-		/// </summary>
-		private string Forward
-		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.backForward[(int) this.lang, 1] : null;
-			}
-		}
-
 		/// <summary>
 		/// Gets the language specific value for the in game currency.
 		/// </summary>
@@ -83,28 +50,6 @@ namespace PLFHelper.Parser
 			get
 			{
 				return (this.lang != Language.unknown) ? this.currency[(int) this.lang] : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets the language specific value for the "Current offers" string.
-		/// </summary>
-		private string CurrentOffers
-		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.currentOffers[(int) this.lang] : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets the language specific value for the "Delete filter" string.
-		/// </summary>
-		private string DeleteFilter
-		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.deleteFilter[(int) this.lang] : null;
 			}
 		}
 
@@ -131,47 +76,11 @@ namespace PLFHelper.Parser
 		}
 
 		/// <summary>
-		/// Gets the language specific value for the "Show my ranking" string.
+		/// Gets if the parsing was successful
 		/// </summary>
-		private string ShowMyRanking
+		public bool Successful
 		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.showMyRanking[(int) this.lang] : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets the language specific value for the "Total" string.
-		/// </summary>
-		private string Total
-		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.total[(int) this.lang] : null;
-			}
-		}
-
-		/// <summary>
-		/// Gets the language specific value for all two words products.
-		/// </summary>
-		private string TwoWords
-		{
-			get
-			{
-				return this.twoWords;
-			}
-		}
-
-		/// <summary>
-		/// Gets the language specific value for the "Welcome on big marketplace" string.
-		/// </summary>
-		private string WelcomeOnBigMarketplace
-		{
-			get
-			{
-				return (this.lang != Language.unknown) ? this.welcomeOnBigMarketPlace[(int) this.lang] : null;
-			}
+			get; private set;
 		}
 		#endregion
 		#region Constructors
@@ -194,6 +103,12 @@ namespace PLFHelper.Parser
 
 			this.names = names;
 			this.twoWords = FilterTwoWords(names) + "|";
+
+			// Create regular expressions we need once so we don't have to recompile them everytime we want to use them.
+			string escapedCurrency = Regex.Escape(this.Currency);
+			this.regexMarket = new Regex(@"^[\d.,]+\s+(?<product>" + this.twoWords + @"\S+).+(?<value>[\d.,]{3,}) " + escapedCurrency + @"\s+[\d.,]{3,} " + escapedCurrency + ".+$", RegexOptions.Multiline);
+			this.regexPlayerOnePoint = new Regex(@"^(?<position>\d+)[.,].+\s+1$", RegexOptions.Multiline | RegexOptions.RightToLeft);
+			this.regexTownHall = new Regex("^" + Regex.Escape(this.PlayersTotal) + @" (?<player>\d+).+$", RegexOptions.Multiline);
 		}
 
 		/// <summary>
@@ -237,6 +152,12 @@ namespace PLFHelper.Parser
 
 			this.names = names;
 			this.twoWords = FilterTwoWords(names) + "|";
+
+			// Create regular expressions we need once so we don't have to recompile them everytime we want to use them.
+			string escapedCurrency = Regex.Escape(this.Currency);
+			this.regexMarket = new Regex(@"^[\d.,]+\s+(?<product>" + this.twoWords + @"\S+).+(?<value>[\d.,]{3,}) " + escapedCurrency + @"\s+[\d.,]{3,} " + escapedCurrency + ".+$", RegexOptions.Multiline);
+			this.regexPlayerOnePoint = new Regex(@"^(?<position>\d+)[.,].+\s+1$", RegexOptions.Multiline | RegexOptions.RightToLeft);
+			this.regexTownHall = new Regex("^" + Regex.Escape(this.PlayersTotal) + @" (?<player>\d+).+$", RegexOptions.Multiline);
 		}
 
 		/// <summary>
@@ -258,16 +179,13 @@ namespace PLFHelper.Parser
 		{
 			if (this.PlayersIndex > -1 && this.Players1Index > -1)
 			{
-				var marketRegex = new Regex(@"^[\d.,]+\s+(?<product>" + this.TwoWords + @"\S+).+(?<value>[\d.,]{3,}) " + Regex.Escape(this.Currency) + @"\s+[\d.,]{3,} " + Regex.Escape(this.Currency) + ".+$", RegexOptions.Multiline);
-				var townhallRegex = new Regex("^" + Regex.Escape(this.PlayersTotal) + @" (?<player>\d+).+$", RegexOptions.Multiline);
-
-				if (marketRegex.IsMatch(text))
+				if (this.regexMarket.IsMatch(text))
 				{
-					return ParseMarket(marketRegex.Match(text), values);
+					return ParseMarket(this.regexMarket.Match(text), values);
 				}
-				else if (text.IndexOf(this.ListOfAllPlayersPoints) > -1 && townhallRegex.IsMatch(text))
+				else if (text.IndexOf(this.ListOfAllPlayersPoints) > -1 && this.regexTownHall.IsMatch(text))
 				{
-					return ParseTownHall(townhallRegex.Match(text), text, values);
+					return ParseTownHall(this.regexTownHall.Match(text), text, values);
 				}
 			}
 			this.Successful = false;
@@ -309,10 +227,9 @@ namespace PLFHelper.Parser
 			values[this.PlayersIndex] = Single.Parse(match.Groups["player"].Value, this.ciInfo);
 
 			// Let's move on to the last player with one point:
-			var player1PointRegex = new Regex(@"^(?<position>\d+)[.,].+\s+1$", RegexOptions.Multiline | RegexOptions.RightToLeft);
-			if (player1PointRegex.IsMatch(text))
+			if (this.regexPlayerOnePoint.IsMatch(text))
 			{
-				var player1PointMatch = player1PointRegex.Match(text);
+				var player1PointMatch = this.regexPlayerOnePoint.Match(text);
 				values[this.Players1Index] = Single.Parse(player1PointMatch.Groups["position"].Value, this.ciInfo);
 			}
 			// If ANYTHING set Successful to true.
