@@ -133,9 +133,9 @@ namespace PLFHelper.Parsers
 		/// Returns the lang code for a CultureInfo object depending on the current lang variable.
 		/// </summary>
 		/// <returns>Returns a string represeting a lang code for a CultureInfo object.</returns>
-		protected virtual string ReturnLangCode()
+		protected static string ReturnLangCode(Language lang)
 		{
-			switch (this.lang)
+			switch (lang)
 			{
 				case Language.DE:
 					return "de-DE";

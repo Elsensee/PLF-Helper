@@ -99,7 +99,7 @@ namespace PLFHelper.Parsers
 			}
 			this.lang = lang;
 
-			this.ciInfo = new CultureInfo(this.ReturnLangCode());
+			this.ciInfo = new CultureInfo(ReturnLangCode(this.lang));
 
 			this.names = names;
 			this.twoWords = FilterTwoWords(names) + "|";
@@ -148,7 +148,7 @@ namespace PLFHelper.Parsers
 					throw new ArgumentException(LocalizationManager.GetLocalizedString("NoValidLanguage"), "lang");
 			}
 
-			this.ciInfo = new CultureInfo(this.ReturnLangCode());
+			this.ciInfo = new CultureInfo(ReturnLangCode(this.lang));
 
 			this.names = names;
 			this.twoWords = FilterTwoWords(names) + "|";
