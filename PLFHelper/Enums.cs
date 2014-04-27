@@ -53,4 +53,15 @@ namespace PLFHelper
 		November,
 		December
 	}
+
+	/// <summary>
+	/// Specifies a supported language.
+	/// </summary>
+	public enum Language
+	{
+		Unknown = -1,
+		EN = 0,
+		DE = 1,
+		NL = 2
+	}
 }

@@ -49,7 +49,7 @@ namespace PLFHelper.Parsers
 		{
 			get
 			{
-				return (this.lang != Language.unknown) ? this.currency[(int) this.lang] : null;
+				return (this.lang != Language.Unknown) ? this.currency[(int) this.lang] : null;
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace PLFHelper.Parsers
 		{
 			get
 			{
-				return (this.lang != Language.unknown) ? this.listOfAllPlayersPoints[(int) this.lang] : null;
+				return (this.lang != Language.Unknown) ? this.listOfAllPlayersPoints[(int) this.lang] : null;
 			}
 		}
 
@@ -71,7 +71,7 @@ namespace PLFHelper.Parsers
 		{
 			get
 			{
-				return (this.lang != Language.unknown) ? this.playersTotal[(int) this.lang] : null;
+				return (this.lang != Language.Unknown) ? this.playersTotal[(int) this.lang] : null;
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace PLFHelper.Parsers
 		{
 			LocalizationManager.Initialize();
 
-			if (lang == Language.unknown)
+			if (lang == Language.Unknown)
 			{
 				throw new ArgumentException(LocalizationManager.GetLocalizedString("NoValidLanguage"), "lang");
 			}

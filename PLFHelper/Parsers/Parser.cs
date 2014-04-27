@@ -166,12 +166,4 @@ namespace PLFHelper.Parsers
 			return -1;
 		}
 	}
-
-	public enum Language
-	{
-		unknown = -1,
-		EN = 0,
-		DE = 1,
-		NL = 2
-	}
 }
