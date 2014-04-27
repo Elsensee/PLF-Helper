@@ -129,35 +129,8 @@ namespace PLFHelper.Parsers
 		/// </summary>
 		/// <param name="lang">The language with which the parser should work.</param>
 		/// <param name="names">String array of all the plant names.</param>
-		public ParserMH(string lang, string[] names)
+		public ParserMH(string lang, string[] names) : this(StringToLanguage(lang), names)
 		{
-			LocalizationManager.Initialize();
-
-			switch (lang.ToUpper())
-			{
-				case "EN":
-					this.lang = Language.EN;
-					break;
-				case "DE":
-					this.lang = Language.DE;
-					break;
-				case "NL":
-					this.lang = Language.NL;
-					break;
-				default:
-					throw new ArgumentException(LocalizationManager.GetLocalizedString("NoValidLanguage"), "lang");
-			}
-
-			this.ciInfo = new CultureInfo(ReturnLangCode(this.lang));
-
-			this.names = names;
-			this.twoWords = FilterTwoWords(names) + "|";
-
-			// Create regular expressions we need once so we don't have to recompile them everytime we want to use them.
-			string escapedCurrency = Regex.Escape(this.Currency);
-			this.regexMarket = new Regex(@"^[\d.,]+\s+(?<product>" + this.twoWords + @"\S+).+(?<value>[\d.,]{3,}) " + escapedCurrency + @"\s+[\d.,]{3,} " + escapedCurrency + ".+$", RegexOptions.Multiline);
-			this.regexPlayerOnePoint = new Regex(@"^(?<position>\d+)[.,].+\s+1$", RegexOptions.Multiline | RegexOptions.RightToLeft);
-			this.regexTownHall = new Regex("^" + Regex.Escape(this.PlayersTotal) + @" (?<player>\d+).+$", RegexOptions.Multiline);
 		}
 
 		/// <summary>
@@ -167,10 +140,8 @@ namespace PLFHelper.Parsers
 		/// <param name="names">String array of all the plant names.</param>
 		/// <param name="playersIndex">The index of the players value in the values array.</param>
 		/// <param name="players1Index">The index of the last player with one points value in the values array.</param>
-		public ParserMH(string lang, string[] names, int playersIndex, int players1Index) : this(lang, names)
+		public ParserMH(string lang, string[] names, int playersIndex, int players1Index) : this(StringToLanguage(lang), names, playersIndex, players1Index)
 		{
-			this.PlayersIndex = playersIndex;
-			this.Players1Index = players1Index;
 		}
 		#endregion
 

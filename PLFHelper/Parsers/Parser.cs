@@ -165,5 +165,25 @@ namespace PLFHelper.Parsers
 			}
 			return -1;
 		}
+
+		/// <summary>
+		/// Converts a string to a language.
+		/// </summary>
+		/// <param name="strLang">The language which should be converted.</param>
+		/// <returns>Returns the converted Language.</returns>
+		protected static Language StringToLanguage(string strLang)
+		{
+			switch (strLang.ToUpper())
+			{
+				case "EN":
+					return Language.EN;
+				case "DE":
+					return Language.DE;
+				case "NL":
+					return Language.NL;
+				default:
+					return Language.Unknown;
+			}
+		}
 	}
 }
