@@ -102,7 +102,7 @@ namespace PLFHelper.Parsers
 			this.ciInfo = new CultureInfo(ReturnLangCode(this.lang));
 
 			this.names = names;
-			this.twoWords = FilterTwoWords(names) + "|";
+			this.twoWords = FilterTwoWords(names);
 
 			// Create regular expressions we need once so we don't have to recompile them everytime we want to use them.
 			string escapedCurrency = Regex.Escape(this.Currency);

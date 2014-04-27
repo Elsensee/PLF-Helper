@@ -108,7 +108,7 @@ namespace PLFHelper.Parsers
 				}
 				iterations++;
 			}
-			if (iterations >= names.Length)
+			if (iterations == names.Length)
 			{
 				return String.Empty;
 			}
@@ -125,6 +125,7 @@ namespace PLFHelper.Parsers
 				}
 				iterations++;
 			}
+			builder.Append('|');
 
 			return builder.ToString();
 		}
