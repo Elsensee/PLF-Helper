@@ -232,6 +232,11 @@ namespace PLFHelper.Localization
 		/// <exception cref="System.ArgumentNullException">name is null.</exception>
 		public static string GetLocalizedString(string name, bool fileWithoutSuffix = false)
 		{
+			// Check if dictionary is initialized and if not, do that
+			if (strings.Count == 0)
+			{
+				InitializeDictionary();
+			}
 			// If name is null we won't find any string...
 			if (name == null)
 			{
@@ -239,7 +244,7 @@ namespace PLFHelper.Localization
 			}
 
 			string result;
-			if (!strings.TryGetValue("name", out result))
+			if (!strings.TryGetValue(name, out result))
 			{
 				return null;
 			}
