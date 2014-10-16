@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="Clean" DefaultTargets="Build;CreateZip">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build;CreateZip">
   <PropertyGroup>
     <ProjectGuid>{C3AA90A6-D41B-41CE-A43E-471575347617}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,7 +48,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <MSBuildCommunityTasksPath>$(SolutionDir)\.build</MSBuildCommunityTasksPath>
-  </PropertyGroup> 
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Google.GData.Client">
       <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
@@ -68,7 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.cs" />
-    <Compile Include="FormPLF.cs" />
+    <Compile Include="FormPLF.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormPLF.Designer.cs">
       <DependentUpon>FormPLF.cs</DependentUpon>
     </Compile>
@@ -92,21 +94,16 @@
     <EmbeddedResource Include="Localization\strings_de.txt" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Localization" />
-    <Folder Include="Configuration" />
-    <Folder Include="Parsers" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets" />
-
   <Target Name="CreateZip">
     <GetAssemblyIdentity AssemblyFiles=".\bin\$(Configuration)\PLFHelper.exe">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo"/>
+      <Output TaskParameter="Assemblies" ItemName="AssemblyInfo" />
     </GetAssemblyIdentity>
     <ItemGroup>
-      <BinDirectoryFiles Include=".\bin\$(Configuration)\**" Exclude=".\bin\$(Configuration)\*.pdb;.\bin\$(Configuration)\*.zip" />
-	</ItemGroup>
+      <BinDirectoryFiles Include=".\bin\$(Configuration)\**" Exclude=".\bin\$(Configuration)\*.pdb;.\bin\$(Configuration)\*.zip;.\bin\$(Configuration)\*.vshost.exe*" />
+    </ItemGroup>
     <Zip Files="@(BinDirectoryFiles)" WorkingDirectory=".\bin\$(Configuration)\" ZipFileName=".\bin\$(Configuration)\PLFHelper_%(AssemblyInfo.Version).zip" ZipLevel="9" />
   </Target>
 </Project>
