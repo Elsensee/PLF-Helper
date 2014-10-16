@@ -19,7 +19,10 @@
  * THE SOFTWARE.
  */
 using System;
+using System.Reflection;
 using System.Windows.Forms;
+
+using PLFHelper.Localization;
 
 namespace PLFHelper
 {
@@ -28,6 +31,8 @@ namespace PLFHelper
 	/// </summary>
 	public partial class FormPLF : Form
 	{
+		public readonly string title;
+
 		/// <summary>
 		/// Creates a new instance of the <c>FormPLF</c> class.
 		/// </summary>
@@ -38,10 +43,30 @@ namespace PLFHelper
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+
+			var titleAttribute = (AssemblyTitleAttribute)Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), default(bool))[0];
+			this.title = titleAttribute.Title;
+		}
+
+		/// <summary>
+		/// Updates the title bar of the main window with information about the selected server.
+		/// </summary>
+		/// <param name="server">The server number.</param>
+		/// <param name="serverLang">The language of this server.</param>
+		public void UpdateTitleBar(int server = 0, string serverLang = "DE")
+		{
+			if (server > 0)
+			{
+				if (serverLang.ToUpper() == "DE")
+				{
+					serverLang = "";
+				}
+				this.Text = LocalizationManager.GetLocalizedFormatString("CurrentServer", this.title, ((serverLang != "") ? serverLang + " " : "") + server.ToString());
+			}
+			else
+			{
+				this.Text = this.title;
+			}
 		}
 	}
 }
